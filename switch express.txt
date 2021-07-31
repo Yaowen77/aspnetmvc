@@ -1,0 +1,27 @@
+
+    //耞だ计单τ肚妓Α - C# 7.0 - switch match expression
+    string ScoreLevel(int score)
+    {
+        switch (score)
+        {
+            case int s when s < 60 :
+                return "poor";
+            case int s when s >= 95 :
+                return "excellent";
+            default:
+                return "";
+        }
+    }
+
+----------------------------------------------------------------------
+
+    //耞だ计单τ肚妓Α - C# 8.0 - switch expression
+    string ScoreRating(int port) =>
+    port switch
+    {
+        int s when s < 60  => "poor",
+        int s when s >= 95 => "excellent",
+        _ => ""
+    };
+}
+----------------------------------------------------------------------

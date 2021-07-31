@@ -1,0 +1,15 @@
+class Brid{
+   pubilc virtual void Fly(){
+   }
+
+}
+
+virtual 表示予許子類別複寫它
+
+class Penguin : Brid {
+   pubilc override void Fly(){
+   }
+
+}
+
+override 覆寫要加這個...

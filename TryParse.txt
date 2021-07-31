@@ -1,0 +1,9 @@
+檢查是否為數值
+
+double.TryParse("xys",out d)
+d 會是false
+
+
+double.TryParse("1.00",out d)
+
+d 會是true

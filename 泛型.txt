@@ -1,0 +1,51 @@
+
+我們用Stack<T> 跟 Queue<T> 來使用集合泛型
+這是因為我們習慣用T來表示泛型
+回傳類型 方法名稱<T>(傳入參數){
+//你的程式碼
+}
+
+public string EatApple<T>(T num){
+    return "我吃了"+num+"個蘋果，傳入型態是"+typeof(T);
+}
+
+
+void Main(){
+    Console.WriteLine(EatApple<int>(5));
+    //我吃了5個蘋果，傳入型態是System.Int32
+    Console.WriteLine(EatApple<string>("跟榴槤一樣大的一"));
+    //我吃了跟榴槤一樣大的一個蘋果，傳入型態是System.String
+    Console.WriteLine(EatApple<double>(1.5));
+    //我吃了1.5個蘋果，傳入型態是System.Double
+}
+
+
+如果今天有兩個泛型類別要傳入
+
+public int Test<T1,T2>(T1 obj1,T2 obj2){
+    //你的程式碼
+}
+
+
+
+那我今天回傳類型也要不固定捏
+一樣能使用泛型
+
+public T Example<T>(int input)
+{
+    //code
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://ithelp.ithome.com.tw/articles/10234639

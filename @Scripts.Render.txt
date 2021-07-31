@@ -1,0 +1,8 @@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    Scripts.Render  會幫忙壓縮 讓網頁載入比較快 下方式未壓縮的寫法
+----------------------------------------------------------------
+    <script src="/Scripts/jquery-3.4.1.js"></script>
+
+    <script src="/Scripts/jquery.validate.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js"></script>

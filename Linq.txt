@@ -1,0 +1,101 @@
+select、selectMany、where、OrderBy、GroupBy、Join、GroupJoin、Skip、Take、Aggergate
+
+x => x * x
+(x, y) => x * y
+(string x) => x * x
+() => Console.WriteLine("Hello Lambda")
+x => { return x * x; }
+----------------------------------------------
+from x in Products
+select x.ProductName
+
+Products
+   .Select (x => x.ProductName)
+
+SELECT [t0].[ProductName]
+FROM [Products] AS [t0]
+
+-------------------------------------------------
+var results //Implicitly typed variables
+    = from c in SomeCollection  //Query Expression
+      where c.SomeProperty < 10
+      select new {c.SomeProperty, c.OtherProperty}; //Anonymous types和Object Initializer
+
+var results =
+     SomeCollection
+        .Where(c => c.SomeProperty < 10)    //Lambda Expression
+        .Select(c => new {c.SomeProperty, c.OtherProperty});
+
+results.ForEach(x => {Console.WriteLine(x.ToString());})    //Lambda Statement
+
+-------------------------------------------------
+
+from x in Products
+select x.ProductName
+
+第一行的from是將產品(Products)這個集合上的每一個元素以x來表示
+第二行的select代表說要將每一個元素(x)的產品名稱(ProductName)輸出
+
+from x in Products
+select new {x.ProductName, x.UnitPrice}
+
+new表示這個變數是一個類別
+-------------------------------------------------
+
+// Using query expression syntax.
+var query = from x in Products
+select new {x.ProductName, x.UnitPrice};
+
+// Using method-based query syntax.
+var method = Products
+   .Select (
+      x => 
+         new  
+         {
+            ProductName = x.ProductName, 
+            UnitPrice = x.UnitPrice
+         }
+   );
+
+-------------------------------------------------
+OrderBy
+設定第一個排序條件，而且此排序條件為遞增排序。
+
+OrderByDescending
+設定第一個排序條件，而且此排序條件為遞減排序。
+
+ThenBy
+設定第二個以後的排序條件，此排序條件為遞增排序。
+
+ThenByDescending
+設定第二個以後的排序條件，此排序條件為遞減排序。
+-------------------------------------------------
+from g in
+    from c in customers
+    group c by c.Country
+select new { Country = g.Key, CustCount = g.Count() }
+
+customers.
+GroupBy(c => c.Country).
+Select(g => new { Country = g.Key, CustCount = g.Count() })
+-------------------------------------------------
+from c in Customers
+join o in Orders on c.CustomerID equals o.CustomerID
+select c.ContactName
+
+Customers
+   .Join (
+      Orders,
+      c => c.CustomerID,
+      o => o.CustomerID,
+      (c, o) => c.ContactName
+   )
+-------------------------------------------------
+Skip: 由集合的第一個元素開始記數，到達指定的數量為止的元素都忽略不算在結果集合中
+SkipLast: 由集合的最後個元素往前記數，到達指定的數量為止的元素都忽略不算在結果集合中
+SkipWhile: 集合中符合條件的元素忽略，碰到第一個不符合條件的元素及其之後的元素都回傳
+-------------------------------------------------
+Take: 第一個元素起算到參數設定的數量為止的元素的集合為結果集合
+TakeLast: 最後個元素往前算到參數設定的數量為止的元素集合為結果集合
+TakeWhile: 第一個元素開始取直到不符合條件的元素為止，結果集合為第一個元素到不符合條件的元素的前一個元素元素的集合
+-------------------------------------------------

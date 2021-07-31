@@ -1,0 +1,40 @@
+Newtonsoft.Json (JSON.NET)舊版框架 (MVC 5 通用性最高)
+System.Text.Json 新版框架 (NET Core 3.0 以上)
+Utf8Json(NuGet套件) 編碼
+Jil (NuGet套件) 解碼
+
+效能 (Utf8Json 、Jil) > System.Text.Json > Newtonsoft.Json
+
+
+            persons = new List<Person> {
+                new Person { Id=1, Name="Kevin", Email="kevin@gmail.com" },
+                new Person { Id=2, Name="David", Email="kevin@gmail.com" },
+                new Person { Id=3, Name="Rose", Email="kevin@gmail.com" }
+            };
+
+
+
+            string json1 = System.Text.Json.JsonSerializer.Serialize(persons);
+            var list1 = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(json1);
+
+
+            //2.Newtonsoft.Json
+            string json2 = Newtonsoft.Json.JsonConvert.SerializeObject(persons);
+            var list2 = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Person>>(json2);
+
+            
+            //3.Controller.Json()- 回傳JsonResult
+            JsonResult json3 = Json(persons);
+
+            //4.Utf8Json - 第三方的高效能JSON序列化及反序列化套件
+            string json4 = Utf8Json.JsonSerializer.ToJsonString(persons);
+            var list4 = Utf8Json.JsonSerializer.Deserialize<List<Person>>(json4);
+
+            //List<Person> --> byte[](UTF8)
+            byte[] jsonBytes = Utf8Json.JsonSerializer.Serialize(persons);
+            var listPersons = Utf8Json.JsonSerializer.Deserialize<List<Person>>(jsonBytes);
+
+
+            //5.Jil - 第三方的高效能JSON序列化及反序列化套件
+            string json5 = Jil.JSON.Serialize(persons);
+            var list5 = Jil.JSON.Deserialize<List<Person>>(json5);

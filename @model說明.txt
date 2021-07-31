@@ -1,0 +1,5 @@
+@model IEnumerable<CoreMvc3_Pillars.Models.Employee>
+
+IEnumerable = 集合式多筆資料
+
+單筆資料(非集合) = @model Employee

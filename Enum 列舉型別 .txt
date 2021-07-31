@@ -1,0 +1,29 @@
+public enum Sex
+{
+    //男生
+    Male = 1,
+    
+    //女生
+    Female = 2
+}
+
+public string GetSexName(Sex sex)
+{
+    if (sex == Sex.Male)
+    {
+        return "男";
+    }
+    return "女";
+}
+
+//需輸出中文的地方
+var sexName = GetSexName(user.Sex);
+
+指定 Enum 的數值型態
+byte、sbyte、short、ushort、int、uint、long、ulong
+
+public enum Sex : byte
+{
+    Male,
+    Female
+}

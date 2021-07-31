@@ -1,0 +1,4 @@
+out 
+
+a = return(b,c)
+console.writeLine(a,b,c)

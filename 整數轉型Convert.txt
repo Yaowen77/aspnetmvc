@@ -1,0 +1,12 @@
+Convert(轉型)
+Convert.ToInt32("5.5");
+
+Parse(強制轉型)
+int)(5.5);
+int.Parse("5.5");
+
+TryParse(安全轉型)則是無條件捨去
+int i = 0;
+int.TryParse("5.5", out i)
+
+(Net Core 2.0)效能上 Parse > TryParse > Convert。

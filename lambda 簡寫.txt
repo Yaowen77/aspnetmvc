@@ -1,0 +1,25 @@
+1.刪除return ,{} 關鍵字
+2.增加=>符號
+3.調用方法不需要取名子
+
+(input-parameters) => expression
+(input-parameters) => { statement; }
+
+-------------------------------------
+bool IsEven(int num)
+{
+  return num % 2 == 0;
+}
+
+bool isEven(int num) => num % 2 == 0;
+
+
+------------------------------------
+
+void Shout(string x) => Console.WriteLine(x.ToUpper());
+
+------------------------------------
+
+ bool makesContact = Array.Exists(spaceRocks, (string s) => s == "meteorite");
+bool makesContact = Array.Exists(spaceRocks, (s => s == "meteorite");
+------------------------------------

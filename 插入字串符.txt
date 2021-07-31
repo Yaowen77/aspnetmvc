@@ -1,0 +1,4 @@
+string yourFaveMusician = "David Bowie";
+string myFaveMusician = "Solange";
+ 
+Console.WriteLine($"Your favorite musician is {yourFaveMusician} and mine is {myFaveMusician}.")

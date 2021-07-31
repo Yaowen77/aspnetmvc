@@ -1,0 +1,19 @@
+ 導頁寫法
+如在前端需要增加按鈕或連超來執行導頁，可以有以下做法：
+1. Link
+@Html.ActionLink("Add Member", "Edit", "Travel")
+參數1為link名稱
+參數2為action名稱，也就是controller裡的method名稱
+參數3為controller名稱
+
+延伸說明
+在.Net MVC寫法中，有overloading的參數指定到action或是controller時，
+都是先指定action，再指定controller，例如：
+@Html.ActionLink("Add Member", "Edit", "Travel")
+@Html.BeginForm("Edit", "Travel", FormMethod.Post)
+@Url.Action("Index","Mail")
+
+Button
+如欲顯示按鈕時，導向的頁面可使用@Url.Action(action,controller) 來指定。
+<input type="button" value="重新填寫" onclick="javascript:window.location='@Url.Action("Edit", "USERLOG")'" />
+*如要action到原來的controller，則可省略第二個參數，直接寫成@Url.Action("Edit")即可。

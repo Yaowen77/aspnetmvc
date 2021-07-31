@@ -1,0 +1,15 @@
+舉器 Enumerator，而該列舉器就是通過迭代器來實現的。比如最常見的一種使用場景就是遍歷陣列中的每一個元素，如下面逐個列印陣列元素的示例。
+
+int[] numbers = { 1, 2, 3, 4, 5 };
+IEnumerator enumerator = numbers.GetEnumerator();
+while (enumerator.MoveNext())
+{
+  Console.WriteLine(enumerator.Current);
+}
+其實這就是 foreach 的工作原理，上面程式碼可以用 foreach 改寫如下：
+
+int[] numbers = { 1, 2, 3, 4, 5 };
+foreach (int number in numbers)
+{
+  Console.WriteLine(number);
+}

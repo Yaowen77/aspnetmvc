@@ -1,0 +1,7 @@
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "{0}，至少要有 {2} 個字(最長允許 {1} 個字)")]
+        // {0} 為 [Display(Name=....)]     
+        // {1} 為 [StringLength(50,
+        // {2} 為 [StringLength(...MinimumLength = 3,  .... 以此類推。請看圖片
+        [Display(Name = "名稱(UserName，必填)")]
+        [Required(ErrorMessage = "*** 自訂訊息 *** 必填欄位 ***")]     // 必填欄位
+        public string UserName { get; set; }

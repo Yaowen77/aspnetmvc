@@ -1,0 +1,29 @@
+ Device_List device_List = new Device_List();
+ device_List = CallAPI<Device_List, Device>(new Device(), GlobalFunction.GlobalGetDevice);
+
+
+
+        public T CallAPI<T, T1>(T1 t1, string strParaUri)
+        {
+            T RetuenValue = default(T);
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(GlobalFunction.GlobalAPIURL);
+                HttpResponseMessage response = null;
+                // 將 data 轉為 json
+                string json = JsonConvert.SerializeObject(t1);
+                // 將轉為 string 的 json 依編碼並指定 content type 存為 httpcontent
+                HttpContent contentPost = new StringContent(json, Encoding.UTF8, "application/json");
+                response = httpClient.PostAsync(strParaUri, contentPost).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    RetuenValue = JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
+                }
+            }
+            catch (Exception ex)
+            {
+                PubFunc.GenErrorLog("(GetAuthorized_Code) " + ex.ToString(), null);
+            }
+            return RetuenValue;
+        }

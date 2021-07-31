@@ -1,0 +1,78 @@
+類別必須實作所有的介面成員，如果沒有去實作則會造成錯誤。
+
+介面無法使用存取層級修飾詞，所有成員都自動定義為 public。
+
+依照慣例，介面名稱需在第一個字母加上 I 前綴。
+
+public interface I手機
+{
+    string 打電話(string 電話號碼);
+    string 掛電話();
+    string 調音量(int 音量大小);
+    string 轉振動();
+}
+
+
+public class iphone4S : I手機
+{
+    public string 打電話(string 電話號碼)
+    {
+        Console.WriteLine("iOS打電話給"+ 電話號碼);
+        return "撥號中";
+    }
+
+    public string 掛電話()
+    {
+        Console.WriteLine("iOS將通話中電話結束");
+        return "結束通話";
+    }
+
+    public string 調音量(int 音量大小)
+    {
+        Console.WriteLine("iOS將音量調整為" + 音量大小);
+        return "完成調音量";
+    }
+
+    public string 轉振動()
+    {
+        Console.WriteLine("iOS將轉振動");
+        return "完成轉振動";
+    }
+
+    public string 呼叫Siri(string 指令)
+    {
+        //注意這是I手機沒有定義的方法
+        return "Siri說" + 指令;
+    }
+}
+
+
+
+
+
+
+
+
+interface IAnimal {
+  void Eat ();
+  void Sleep ();
+}
+interface IFly {
+  void Fly ();
+}
+interface ISwim {
+  void Swim ();
+}
+
+
+class Bird : IAnimal, IFly {
+  public void Eat () {
+    Console.WriteLine ("鳥吃");
+  }
+  public void Sleep () {
+    Console.WriteLine ("鳥睡");
+  }
+  public void Fly () {
+    Console.WriteLine ("鳥飛");
+  }
+}

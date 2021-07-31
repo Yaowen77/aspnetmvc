@@ -1,0 +1,75 @@
+物件導向
+基本概念(類別、物件)
+在程式語言中，類別定義一件事物的抽象特點。類別的定義包含了資料的形式(屬性, Field)以及對資料的操作(方法, Method)。我們也可以想像成類別是汽車的設計藍圖(blueprint)，其中我們可以在這張藍圖定義抽象的內容(也就是屬性、方法)，例如汽車的廠牌、汽車的車名以及馬力和取得汽車資訊等。
+class Car{
+    public String brand;
+    public String type;
+    public int hp;
+    public String getInformation(){
+      return "廠牌"+brand+"型號"+type+"馬力"+hp;     
+    }
+}
+
+物件(Object)
+物件也就是類別的實例，也就是說有了類別這張藍圖我們可以在程式中產生許多汽車類別的資料，而這些資料彼此之間不互相影響，每一個皆是獨立的。
+Car BMW = new Car("BMW","X5",340);//宣告類別為Car的資料，並給定BMW變數
+Car Porsche = new Car("Porsche","Cayenne",300);//宣告類別為Car的資料，並給定Porsche變數
+
+三大特性(封裝、繼承、多型)
+封裝
+對一件事情只需要理解他的外在就好，不需要了解裡面內部的構造。例如：由先前的例子，我們可以透過getInformation()取得車子資訊
+
+繼承
+子類別繼承了父類別。例如：計程車(子類別)繼承了汽車(父類別)原有的屬性以及方法，也新增了自己特有的屬性
+class Car{
+    public String brand;
+    public String type;
+    public int hp;
+    public String getInformation(){
+      return "廠牌"+brand+"型號"+type+"馬力"+hp;     
+    }
+}
+class Taxi extends Car{
+    public String driverName;
+}
+
+
+多型
+多個相同名稱的方法，傳入不同的參數，會執行不同的敘述。多型(Polymorphism)則包含多載(Overloading)和複寫(Overriding)。
+public int computeArea(int length){
+    return length * length;
+}
+public int computeArea(int length, int width){
+    return length * width;
+}
+
+複寫(Overriding) — 是指覆寫掉父類別中的函式。例如：動物類別(父類別) getLegs()方法被鳥類別(子類別)覆蓋。
+class Animal{
+    protected int legs = 1;
+    protected virtual int getLegs(){
+      return legs*4;
+    }
+}
+class Bird extends Animal{
+    protected override int getLegs(){
+      return legs*2;
+    }
+}
+
+List用法
+有點像是不用宣告長度的陣列(Array)
+list.Sort()排序 由常到短
+
+陣列需要宣告長度
+
+C# Dictionary的用法，以及查字典的用途
+什麼是Dictionary？他是個很簡單的東西，概念跟字典有點類似沒錯，如果我有10組鑰匙，跟10組物品，且滿足兩個條件，一、每個鑰匙不重複，二、每個鑰匙配一個物品。（物品可以長的一樣，比方第一個物品跟第六個物品都是一樣的杯子，只要能夠不會讓鑰匙沒有搭配的物品，或兩把鑰匙搭配到同一個物品就行了。）那接下來，你問Dictionary，某一把鑰匙，他就會告訴你對應的物品是什麼。我們看一下範例
+
+foreach 
+陣列使用 foreach
+int[] numbers = { 4, 5, 6, 1, 2, 3, -2, -1, 0 };
+foreach (int i in numbers)
+{
+    System.Console.Write("{0} ", i);
+}
+// Output: 4 5 6 1 2 3 -2 -1 0

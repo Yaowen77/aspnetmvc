@@ -1,0 +1,8 @@
+View
+ @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()  需要加
+}
+
+同時 Controller 也要加
+ [ValidateAntiForgeryToken] 

@@ -1,0 +1,11 @@
+asp-controller	用於產生 URL 的 Controller
+asp-action	產生 href 屬性中包含的Action的名稱，如果沒有指定Controller，則會預設為當頁面所屬的Controller
+asp-route-{value}	用於產生路由參數，{value}可以替代成任意的參數名稱，例如預設的參數是id，屬性就會為asp-route-id
+asp-route	用於產生相對應名稱路由的 URL(有套用[Route]屬性，並給予Name的Action)
+asp-all-route-data	asp-all-route-data
+asp-fragment	設定的內容會以#後面加上內容，帶入URL中
+asp-area	設定Area名稱
+asp-protocol	用於在 URL中指定通訊協定
+asp-host	在URL指定主機名稱
+asp-page	將href指定到Razor Page的頁面
+asp-page-handler	搭配Razor Page使用，會連接到Razor Page的指定方法

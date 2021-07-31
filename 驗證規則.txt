@@ -1,0 +1,46 @@
+Required : 必填欄位
+StringLeght:字串長度
+MinLength:最小長度
+MaxLength:最大長度
+CreditCard:信用卡格式
+EmailAddress:信箱
+RegularExpression:正規表示法
+Range(num,num):範圍
+DisplayName: 欄位要顯示的名稱
+
+
+[Required] 和 [MinimumLength] 屬性 (attribute) 指出屬性 (property) 必須具有值。 無需防止使用者輸入空白字元來滿足這種驗證。
+[RegularExpression] 屬性則用來限制可輸入的字元。
+RegularExpression Rating ：
+[Range] 屬性會將值限制在指定的範圍內。
+
+
+namespace RazorPagesMovie.Models
+{
+    public class Movie
+    {
+        public int ID { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
+        [Required]
+        public string Title { get; set; }
+
+        [Display(Name = "Release Date")]
+        [DataType(DataType.Date)]
+        public DateTime ReleaseDate { get; set; }
+
+        [Range(1, 100)]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Price { get; set; }
+
+        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
+        [Required]
+        [StringLength(30)]
+        public string Genre { get; set; }
+
+        [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+        [StringLength(5)]
+        [Required]
+        public string Rating { get; set; }
+    }

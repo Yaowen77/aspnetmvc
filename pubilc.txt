@@ -1,0 +1,162 @@
+存取修飾詞	存取範圍
+public	沒有限制   (任何人可以存取)
+protected	父類別或繼承父類的子類別  (對子類別Public 其他類別Private)
+internal	目前專案 基本上是宣告成員 (member) ，但是不實作
+protected internal(我沒用過)	目前專案或繼承父類的子類別
+private(預設)	當前類別 (只有當前類別可以存取)
+sealed 表示該類別不可繼承
+
+
+
+
+public class Sample
+{
+    // 公開 任何人都可以使用
+    public              int A;
+
+    // 私人 只有自己可以使用 
+    // (就是只能在Sample這Class中才能使用)
+    private             int B;
+
+    // 保護 只有自己及繼承這Class的人才能使用
+    protected           int C;
+
+    // 內部 只能在相同專案中使用
+    internal            int D;
+
+    // 保護內部 只有相同專案且只有自己及繼承的人可以使用
+    protected internal  int E;
+}
+
+
+public
+
+public class Test : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+        // 宣告Class Sample 並實體化
+        Sample sample = new Sample();
+        // A 就是public公開成員 所以我們可以把他點出來使用
+        sample.A = 10;
+    }
+}
+private
+
+public class Test : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+        // 宣告Class Sample 並實體化
+        Sample sample = new Sample();
+        // B private(私有) 所以這段會是錯誤 點不出來的
+        sample.B = 10;
+    }
+}
+
+這邊通常很多人會有疑問  那為什麼要用私有的
+
+其實只主要是防止一些錯誤的事發生
+
+範例
+
+public class Sample2
+{
+    // 實體化時代參數 並傳入你的編號
+    public Sample2(int Number)
+    {
+        this._Number = Number;
+    }
+
+    // 存儲編號 私有使用
+    private int _Number;
+
+    // 用屬性的方式 只能取 不能修改
+    public int Number
+    {
+        get
+        {
+            return _Number;
+        }
+    }
+}
+
+進行測試
+
+public class Test : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+        // 宣告Class Sample2 並實體化 傳入編號參數
+        Sample2 sample = new Sample2(1);
+        // 直接印出編號 = 1
+        Debug.Log(sample.Number);
+    }
+}
+
+那這個編號是不可以被更改的
+
+有可能這些編號代表一些重要的資訊
+
+為了防止你不小心忘記或是其他人使用時不小心改到
+
+ 
+
+protected
+
+public class Test : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+        // 宣告Class Sample
+        Sample sample = new Sample();
+        // protected(保護) 你能在繼承或私有中使用
+        // 所以這是錯誤的
+        sample.C = 10;
+    }
+}
+
+正確方式
+
+// 繼承Sample 如果對繼承不了解 請查閱(8) C# 繼承
+public class Test : Sample
+{
+    // Use this for initialization
+    void Start()
+    {
+        // 不需要再宣告 直接使用此變數
+        C = 10;
+    }
+}
+
+
+
+
+public (C#, PHP, TypeScript, C++, JAVA)
+類別: 無限制存取
+成員: 無限制存取
+private (C#, PHP, TypeScript, C++, JAVA)
+類別: 只有自身Class可存取
+成員: 只有自身Class可存取
+protected (C#, PHP, TypeScript, C++, JAVA)
+類別: 自身Class, 被繼承Class 皆可存取
+成員: 自身Class 可存取, 被繼承Class 無法存取
+internal (C#)
+類別: 相同命名空間 (相同dll存取) 可存取
+成員: 只有自身Class可存取
+protected internal (C#)
+類別: 自身Class, 被繼承Class 皆可存取
+成員: 自身Class, 相同命名空間, 被繼承Class 皆可存取
+private protected (C# 7.2)
+類別: 自身Class, 被繼承Class 皆可存取
+成員: 自身Class 可存取, 被繼承Class無法存取
+package (JAVA)
+類別: 自身Package 可存取
+成員: 自身Package 可存取
+字母大小寫 (GoLang)
+大寫相當 public
+小寫相當 private

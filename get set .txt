@@ -1,0 +1,11 @@
+public string size;
+public string Size
+{
+  get { return size; }
+  set { size = value; }
+}
+
+Â²¤Æ
+
+public string Size
+{ get; set; }

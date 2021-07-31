@@ -1,0 +1,1 @@
+string result = (color == "blue") ? "blue" : "NOT blue";

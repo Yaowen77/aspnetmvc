@@ -1,0 +1,77 @@
+new thread：新增執行緒
+start：啟動執行緒
+sleep：暫停執行緒
+join：讓主執行緒等待執行緒執行結束
+abort：終止執行緒
+ThreadState：查看狀態轉移
+
+
+
+* ********************/
+            //先起一個Thread，委託執行PrintNumbers
+            Thread t = new Thread(PrintNumbers);
+            //開始執行
+            t.Start();
+            //直接呼叫，此時並不會等t執行完
+            PrintNumbers();
+
+
+            /** *******************
+             * 使用Sleep暫停Thread
+             * ********************/
+            //先起一個Thread，委託執行PrintNumbersWithDelay
+            Thread t1 = new Thread(PrintNumbersWithDelay);
+            //開始執行
+            t1.Start();
+            //直接呼叫，此時並不會等t1執行完
+            PrintNumbers();
+
+
+            /** *******************
+             * 使用Join讓主程序等待Thread
+             * ********************/
+            //先起一個Thread，委託執行PrintNumbersWithDelay
+            Thread t2 = new Thread(PrintNumbersWithDelay);
+            //開始執行
+            t2.Start();
+            //測試使用Join等待t2程序完成後，才繼續繼續執行主程序PrintNumbers()
+            t2.Join();
+            PrintNumbers();
+
+
+            /** *******************
+             * 使用Abort讓thread終止執行
+             * ********************/
+            //先起一個Thread，委託執行PrintNumbersWithDelay
+            Thread t3 = new Thread(PrintNumbersWithDelay);
+            //開始執行
+            t3.Start();
+            //讓執行緒暫停比較容易看出差異
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            //測試使用Abort終止t3
+            t3.Abort();
+            PrintNumbers();
+
+
+            /** *******************
+             * 觀察Thread的Status
+             * ********************/
+            Thread t4 = new Thread(PrintNumbersWithStatus);
+            Thread t5 = new Thread(DoNothing);
+            //Unstarted
+            Console.WriteLine(t4.ThreadState.ToString());
+            //開始執行
+            t4.Start();
+            t5.Start();
+            for (int i = 0; i < 10; i++)
+            {
+                //觀察t4的狀態變化
+                Console.WriteLine(t4.ThreadState.ToString());
+            }
+            //讓執行緒暫停比較容易看出差異
+            Thread.Sleep(TimeSpan.FromSeconds(6));
+            //使用Abort終止t4
+            t4.Abort();
+            Console.WriteLine("t4 has been aborted.");
+            Console.WriteLine("t4:" + t4.ThreadState.ToString());
+            Console.WriteLine("t5:" + t5.ThreadState.ToString());

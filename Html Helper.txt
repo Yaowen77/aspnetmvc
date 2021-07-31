@@ -1,0 +1,78 @@
+JS、CSS篇
+@Url.Content(“~/Scripts/numberprice.js”)
+
+@Url.Content(“~/Content/numberprice.css”)
+
+超連結篇
+@Url.Action(“Index”, “Home” , new { })
+
+@Url.Content(“~/logo-welcome.png”)
+
+@Html.ActionLink(“首頁”, “Index”, “Home”)
+
+@Html.ActionLink("關於我們", "About","Home")
+//與上面相同
+<a href="https://www.blogger.com/Home/About">關於我們< /a>
+
+表單篇
+@Html.TextBox("StudentName", null, new { @class = "form-control" })  
+@Html.TextBox("Textbox")
+@Html.TextAreaFor(model => model.textbox)
+
+
+@Html.TextArea("Description", null, new { @class = "form-control" })
+  
+@Html.CheckBox("isNewlyEnrolled", true)
+
+@Html.DropDownList("StudentGender", 
+                    new SelectList(Enum.GetValues(typeof(Gender))),
+                    "Select Gender",
+                    new { @class = "form-control" })
+
+@Html.Hidden("StudentId")
+@Html.HiddenFor(model => model. Hidden)
+
+@Html.Password(" Html.Password ")
+@Html.PasswordFor(model => model.Password)
+
+@Html.Display("StudentName")
+
+@Html.Label("StudentName")
+@Html.LabelFor(model => model.ID)
+
+@Html.Editor("StudentName")
+
+@Html.ValidationMessageFor(model => model.Price, “”, new { @class = “text-danger” })
+
+@Html.RadioButton("RadioButton", 3)
+@Html.RadioButton(model => model.RadioButton, 3)
+
+@Html.CheckBox("CheckBox1")
+@Html.CheckBoxFor(“model => model.CheckBox1")
+
+@using (Html.BeginForm(“Edit”, “Configure”)){
+
+}
+
+帶入html原生tag
+
+@Html.Raw(“<div style=’color:red’>輸出字串</div>”)
+
+
+產生url
+@Url.Action("Index","Mail")
+
+//example:
+<button class="btn" type="button" onclick="location.href='@Url.Action("Index")'">
+返回
+< /button>
+
+
+Form
+@using (Html.BeginForm("Create", “Student", FormMethod.Post, new { enctype = "multipart/form-data" , id="CityId" }))
+{
+
+}
+//與上面相同
+<form action="/Student/Create" enctype="multipart/form-data" id="CityId" method="post">
+</form>

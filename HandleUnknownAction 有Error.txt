@@ -1,0 +1,9 @@
+        // 如果找不到動作（Action）或是輸入錯誤的動作名稱，一律跳回首頁
+        // HandleUnknownAction方法標示為 virtual，所以可以用override覆寫。https://msdn.microsoft.com/zh-tw/library/dd492730(v=vs.118).aspx
+        protected override void HandleUnknownAction(string actionName)
+        {
+            Response.Redirect("http://公司首頁(網址)/");
+            base.HandleUnknownAction(actionName);
+        }
+        //*************************************   連結 MVC_UserDB 資料庫  ********************************* (end)
+

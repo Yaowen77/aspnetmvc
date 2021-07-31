@@ -1,0 +1,8 @@
+[ValidateAntiForgeryToken]
+[HttpPost]
+//≈Á√“®æ∞∞∞Ú§∏
+[ValidateAntiForgeryToken]
+public ActionResult Send()
+{
+  return View();
+}

@@ -1,0 +1,13 @@
+當例外發生在建構子時，我們該如何處理。
+
+參考下面例子當例外發生時，試圖實例化該類別的陳述式最後就不會得到一個實例。
+
+
+try{
+    CurrentExcuse = new Excuse(name);	
+}catch{
+    ...
+    //這邊你可以重新實例化，或是其他敘述。
+    // CurrentExcuse = new Excuse();
+    ...
+}

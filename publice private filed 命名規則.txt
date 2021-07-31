@@ -1,0 +1,6 @@
+private int numberofCows
+public  int NumberofCows
+
+1.宣告私有欄位camelCase
+2.公用特性與方法PascalCase
+3.方法參數 camelCase

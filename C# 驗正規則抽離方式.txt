@@ -1,0 +1,19 @@
+該類別檔上方加入
+ [MetadataType(typeof(UserDBItemArrtibutes))]
+public partial class UserTable
+    {
+
+        public int UserId { get; set; }
+}
+
+新增UserDBItemArrtibutes 類別檔
+
+將原先規則複製過去
+  public class UserDBItemArrtibutes
+    {
+
+
+         [Key]    // 主索引鍵（P.K.）
+        [Display(Name = "ID名稱(UserName，必填)")]
+        public int UserId { get; set; }
+}

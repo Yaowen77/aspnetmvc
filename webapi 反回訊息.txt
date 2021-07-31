@@ -1,0 +1,6 @@
+Json(T content)
+Ok() = http 200
+NotFound() = http 404
+Content 向客戶端返回值和http狀態碼。  200 OK 會回傳 OK
+BadRequest() = http 400客戶端返回400的http錯誤
+Redirect(string location) 將請求重定向到其他地方。

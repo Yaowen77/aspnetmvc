@@ -1,0 +1,33 @@
+
+List：特定型別，不固定長度的陣列。
+List<string> myLists = new List<string>();
+public class Student
+{
+public string id { get; set; }
+public string name { get; set; }
+public int score { get; set; }
+public Student()
+{
+id = string.Empty;
+name = string.Empty;
+score = 0;
+}
+public Student(string _id, string _name, int _score)
+{
+id = _id;
+name = _name;
+score = _score;
+}
+public override string ToString()
+{
+return $”學號:{id}, 姓名:{name}, 分數:{score}.”;
+}
+}
+Student data = new Student();
+List<Student> list = new List<Student>();
+list.Add(new Student(“1”, “小明”, 80));
+Array：不特定型別，固定長度的陣列，長度需事先宣告。
+int[] array = new int[5];
+ArrayList：不特定型別，不固定長度的陣列。
+ArrayList l1 = new ArrayList();
+l1.Add(3); l1.Add(“5”);
