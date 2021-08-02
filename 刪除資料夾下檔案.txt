@@ -1,0 +1,25 @@
+      private static void DeleteLog(string logPath)
+        {
+            //去除資料夾和子檔案的只讀屬性
+            //去除資料夾的只讀屬性
+            System.IO.DirectoryInfo fileInfo = new DirectoryInfo(logPath);
+            fileInfo.Attributes = FileAttributes.Normal & FileAttributes.Directory;
+            //去除檔案的只讀屬性
+            System.IO.File.SetAttributes(logPath, System.IO.FileAttributes.Normal);
+            //判斷資料夾是否還存在
+            if (Directory.Exists(logPath))
+            {
+                foreach (string f in Directory.GetFileSystemEntries(logPath))
+                {
+                    if (File.Exists(f))
+                    {
+                        if (Directory.GetCreationTime(f) < DateTime.Now.AddDays(-60))
+                        {
+                            //如果有子檔案刪除檔案
+                            File.Delete(f);
+                        }
+                    }
+ 
+                }
+            }
+        }

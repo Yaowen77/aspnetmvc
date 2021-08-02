@@ -1,0 +1,54 @@
+ int ApiTry = 0;
+            while (ApiTry <= 2)
+            {
+                string result = "";
+                try
+                {
+                    HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                    req.Credentials = CredentialCache.DefaultCredentials;
+
+                    req.Method = "POST";
+
+                    req.ContentType = "application/x-www-form-urlencoded";
+
+                    req.Timeout = 15000;//?求超??? Timeout 時間為毫秒，30 * 1000 表示 30秒 為超時上限時間。
+                                        //req.Timeout = 100;
+
+                    byte[] data = Encoding.UTF8.GetBytes(postData);
+
+                    req.ContentLength = data.Length;
+
+                    using (Stream reqStream = req.GetRequestStream())
+                    {
+                        reqStream.Write(data, 0, data.Length);
+                        reqStream.Close();
+                    }
+                   
+
+                    HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+
+                    Stream stream = resp.GetResponseStream();
+
+                    //?取???容
+                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                    {
+                        result = reader.ReadToEnd();
+                        HttpsOutTxt(result);
+                        OcardLog("Oupt:" + result, LogPath);
+                        reader.Close();
+                    }
+
+                    resp.Close();
+                    data = null;
+                    break;
+                }
+                catch (WebException error)
+                {
+                    /*if (error.Status == WebExceptionStatus.Timeout)
+                    {
+                        HttpsOutTxt("伺服器沒有回應");
+                    }*/
+                    OcardLog(error.ToString(), LogPath);
+                }
+                ApiTry++;
+            }
