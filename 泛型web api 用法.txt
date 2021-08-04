@@ -1,0 +1,35 @@
+public Result2<MemberData> GetMember([FromBody] Member member)
+{
+
+
+   Result2<MemberData> result = new Result2<MemberData>();
+
+   result.Code = "S001";
+   result.Message = "查詢成功";
+   result.Stauts = "成功";
+
+   while (reader.Read())
+   {
+             
+    result.Data.Add(new MemberData() { 
+                                    
+    MemberId = (reader.IsDBNull(reader.GetOrdinal("MemberId"))) ? "" : (string)reader["MemberId"],
+    MemberName = (reader.IsDBNull(reader.GetOrdinal("MemberName"))) ? "" : (string)reader["MemberName"]
+    });
+   
+    }
+}
+
+
+    public class Result2<T>
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
+
+        public string Stauts { get; set; }
+
+
+        public List<T> Data { get; set; } = new List<T>();
+
+
+    }
