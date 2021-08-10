@@ -4,6 +4,38 @@
 
 依照慣例，介面名稱需在第一個字母加上 I 前綴。
 
+介面裡面方法不需要有public
+
+
+
+ // 這個「IUserTableRepository介面」引用自「UserTableRepository類別」。
+ Models.Repo.IUserTableRepository MyDB = new Models.Repo.UserTableRepository();   // 後面寫的是「類別名稱」
+
+     interface IUserTableRepository
+    {
+
+        // 列出所有學員的紀錄。搭配 Repo控制器的「 List動作」
+        IQueryable<UserTable> ListAllUsers();
+     }
+
+
+  public class UserTableRepository : IUserTableRepository, IDisposable    // *** 重點 ******
+    {    //                                          // **********************   **********不寫IDisposable會出現這種「警告」https://msdn.microsoft.com/library/ms182172.aspx
+
+        //**********   連結 MVC_UserDB 資料庫  *********************** (start)
+        public MVC_UserDBContext _db = new MVC_UserDBContext();
+        //**********   連結 MVC_UserDB 資料庫  *********************** (end)
+
+        public IQueryable<UserTable> ListAllUsers()
+        {
+            return (_db.UserTables);
+            //throw new NotImplementedException();        
+        }
+
+  }
+
+
+
 public interface I手機
 {
     string 打電話(string 電話號碼);
