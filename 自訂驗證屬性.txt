@@ -31,7 +31,35 @@ public class MyValidateDateRangeAttribute : ValidationAttribute
                 return new ValidationResult("");
             }
 
-
-
-
     }
+
+如果要直接在DB類別檔加 ": IValidatableObject"  另外在類別檔裡面直接設private
+public partial class UserTable : IValidatableObject   
+    {     
+}
+
+
+       private string MyStartDate = "1950/1/1";
+        private string MyEndDate = "2020/1/1";
+        
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();   //可以將多個錯誤訊息放在這裡
+
+            // ****** 請自己修改 **************************************** (start)
+            // 日期區間（起迄日）
+            if (UserBirthDay != null && UserBirthDay >= Convert.ToDateTime(MyStartDate) && UserBirthDay <= Convert.ToDateTime(MyEndDate))
+            {
+                // 驗證成功
+            }
+            else
+            {   // 驗證失敗可以出現多句錯誤訊息。                    
+                results.Add(new ValidationResult("[自訂驗證模型 的 .Validate() 錯誤訊息] #1 抱歉～日期區間，不符合或超出範圍", new[] { "1" }));
+                results.Add(new ValidationResult("[自訂驗證模型 的 .Validate() 錯誤訊息] #2", new[] { "2" }));
+            }
+            // ****** 請自己修改 **************************************** (end)           
+
+            return results;
+        }
+    }
+}
