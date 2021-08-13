@@ -1,0 +1,20 @@
+  // .Include() 請輸入字串，UserTable2s類別裡面，導覽屬性的「名稱」
+            // 成功。   *** 想瞭解 .include()的用法，請執行下面這一段！！***
+            ////第一種作法：
+            var result = _db.UserTable2s.Include("DepartmentTable2s").OrderBy(u => u.DepartmentId);
+            // SQL Profile翻譯後的成果 ----
+      
+            // SELECT [Extent1].[UserId] AS[UserId], 
+            //    [Extent1].[UserName] AS[UserName], 
+            //    [Extent1].[UserSex] AS[UserSex], 
+            //    [Extent1].[UserBirthDay] AS[UserBirthDay], 
+            //    [Extent1].[UserMobilePhone] AS[UserMobilePhone], 
+            //    [Extent1].[UserApproved] AS[UserApproved], 
+            //    [Extent1].[DepartmentId] AS[DepartmentId], 
+            //    [Extent2].[DepartmentId] AS[DepartmentId1], 
+            //    [Extent2].[DepartmentName] AS[DepartmentName], 
+            //    [Extent2].[DepartmentYear] AS[DepartmentYear]
+            //FROM[dbo].[UserTable2] AS[Extent1]
+            //INNER JOIN[dbo].[DepartmentTable2] AS[Extent2] ON[Extent1].[DepartmentId] = [Extent2].[DepartmentId]
+            //        ORDER BY[Extent1].[DepartmentId] ASC
+   
