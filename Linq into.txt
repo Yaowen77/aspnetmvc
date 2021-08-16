@@ -1,0 +1,33 @@
+Join + Into：將兩個集合取出符合條件的項目，並呈現為「兩層」的架構。
+ 原始資料：
+Department[] deps ={
+    new Department() { ID = 1, Name = "Developer" },
+    new Department() { ID = 2, Name = "Sales" },
+    new Department() { ID = 3, Name = "Support" }
+};
+
+Employee[] emps = {
+    new Employee() { ID = 1, Name = "code6421", Department_ID = 1 },
+    new Employee() { ID = 2, Name = "tom", Department_ID = 1 },
+    new Employee() { ID = 3, Name = "mary", Department_ID = 2 },
+    new Employee() { ID = 4, Name = "jack", Department_ID = 2 },
+};
+取出： 
+
+foreach (var item in result)
+{
+	Console.WriteLine($"Department Name : {item.Name}");
+	foreach (var emp in item.Employees)
+		Console.WriteLine($"   Name : {emp.Name}");
+}
+其中 into 的型態為 join 後面項目的型態。
+var result = from s1 in deps
+             join s2 in emps on s1.ID equals s2.Department_ID into emp //emp同emps集合元素的型態
+             select new
+             {
+                 Name = s1.Name,
+                 Employees = emp
+             };
+
+
+https://dotblogs.com.tw/Mystic_Pieces/2017/11/18/225549

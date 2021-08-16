@@ -1,0 +1,3 @@
+public virtual ICollection<UserTable2> UserTable2s { get; set; }
+
+virtual 會使用延遲載入
