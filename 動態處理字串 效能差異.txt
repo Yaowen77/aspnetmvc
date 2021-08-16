@@ -1,0 +1,22 @@
+https://dotblogs.com.tw/yc421206/2010/10/26/18575
+
+
+
+public string LoopString()
+{
+    string str = "";
+    for (int i = 0; i < 10; i++)
+    {
+        str += i.ToString();
+    }
+    return str;
+}
+public System.Text.StringBuilder LoopBuild() //¦n
+{
+    System.Text.StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < 10; i++)
+    {
+        sb.Append(i.ToString());
+    }
+    return sb;
+}
