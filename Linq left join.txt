@@ -1,0 +1,12 @@
+https://dotblogs.com.tw/lastsecret/2010/06/28/defaultifempty
+
+
+         var resultViewModel = from u in _db.UserTable2s
+                                  join d in _db.DepartmentTable2s
+                                  on u.DepartmentId equals d.DepartmentId into dt2  //***重點！！
+                                  from d in dt2.DefaultIfEmpty()  //***重點！！
+                                  where d.DepartmentId == _ID   // 跟上一個範例不同之處。
+                                  select new UserDepartmentViewModel { UserVM = u, DepartmentVM = d };
+
+
+DefaultIfEmpty() 主要是這個
