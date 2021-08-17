@@ -10,3 +10,47 @@ https://dotblogs.com.tw/lastsecret/2010/06/28/defaultifempty
 
 
 DefaultIfEmpty() 主要是這個
+
+
+
+http://aminggo.idv.tw/blog/?p=1095
+
+
+inner join 
+
+ from p in Person
+ join o in Vendor
+ on p.BusinessEntityID equals o.BusinessEntityID
+ select new { p.BusinessEntityID, p.Title, p.FirstName,
+ p.LastName, o.ProductVendor, o.Name }
+
+
+from p in Person
+ join o in Vendor
+ on p.BusinessEntityID equals o.BusinessEntityID
+ into g
+ from o in g
+ select new { p.BusinessEntityID, p.Title, p.FirstName, 
+p.LastName, o.ProductVendor, o.Name }
+
+
+Left join 寫法如下
+
+ from p in Person
+ join o in Vendor
+ on p.BusinessEntityID equals o.BusinessEntityID
+ into g
+ from o in g.DefaultIfEmpty()
+ select new { p.BusinessEntityID, p.Title, p.FirstName,
+ p.LastName, o.ProductVendor, o.Name }
+
+
+
+from p in Person
+ join o in Vendor
+ on new {BU = p.BU,BusinessEntityID = p.BusinessEntityID} equals 
+ new {o.BU, o.BusinessEntityID}
+ into g
+ from o in g.DefaultIfEmpty()
+ select new { p.BusinessEntityID, p.Title, p.FirstName,
+ p.LastName, o.ProductVendor, o.Name }
