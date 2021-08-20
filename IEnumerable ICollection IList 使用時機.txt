@@ -6,3 +6,7 @@
 唯讀 不可修改用IEnumerable(因為沒有Add語法)
 
 多對多ICollection
+
+
+IList 跟 ICollection 差異在
+IList有索引所以資料會依存進去的索引順序排列 ICollection 則不行...
