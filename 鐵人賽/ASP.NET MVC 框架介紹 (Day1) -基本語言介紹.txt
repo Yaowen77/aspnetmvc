@@ -61,7 +61,7 @@ https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab
 
 開發環境
 
-使用IDE:visual studio 2019 community (請注意不是VsCode喔)
+使用IDE:visual studio 2019 community (請注意不是Visual Studio Code喔)
 
 資料庫:sql server 2014 北風資料庫 or MySql
 
