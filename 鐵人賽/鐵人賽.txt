@@ -1,0 +1,27 @@
+第一天
+asp.net 書籍介紹 + 線上課程介紹 + 學習語言介紹
+
+
+物件導向介紹(封裝 繼承 多型)
+int string double 型態介紹
+if else case while ...(if簡寫)
+funtion 寫法 (namespace 介紹)
+return  void介紹
+class 介紹
+staic 動態介紹
+SQL語法簡易介紹
+ado.net 連mysql 介紹 
+Dapper
+
+
+MVC 基本架構介紹
+controller 基本介紹
+view 基本介紹
+Razor語法 (Html Helper)
+model 基本介紹
+
+webapi 介紹 (post寫法)
+泛型(結合webapi)介紹
+介面介紹
+
+Linq語法介紹

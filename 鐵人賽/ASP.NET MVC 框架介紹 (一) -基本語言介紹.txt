@@ -1,0 +1,81 @@
+以下是以ASP.NET MVC 基本介紹 + 學習資源 + 需要學會什麼樣的語言 但不會著重在View的部分
+
+
+目標職缺:ASP.NET MVC 後端網頁工程師
+
+基本需要學習技術如下(以下都是我自己念過的...)
+
+基礎語言:C# 
+
+免費教學網頁
+codecademy: https://www.codecademy.com/catalog
+MSDN:https: //docs.microsoft.com/zh-tw/dotnet/csharp/
+
+書籍
+深入淺出 C#, 3/e (Head First C#, 3/e)
+Visual C# 2019 程式設計經典 -- 邁向 Azure 雲端與 AI影像辨識服務
+
+
+註解:C#必學 務必搞懂物件導向
+
+前端(View):Html、Css 、Jquery、bootstrap、JavaScript、Razor 、Angular
+
+免費教學網頁
+codecade:https://www.codecademy.com/catalog 
+Html+Css:https://www.youtube.com/watch?v=ZavL9y4Adrk 金魚
+
+書籍
+JavaScript 概念三明治：基礎觀念、語法原理一次帶走！
+
+付費線上課程 (Css、Html、Jquery、JavaScript)
+六角學院:https://www.hexschool.com/
+
+
+註解:可先學Razor 後續在學 Jquery、bootstrap 但建議還是要了解一下Html的結構 Css 、JavaScript可後續在學
+Angular 部分稍複雜 目前先略過...
+線上課程六角學院or 金魚系列 可先搞懂html架構
+
+資料庫基礎操作Sql、LinQ
+
+SQL免費教學網頁
+
+1keydata:https://www.1keydata.com/tw/sql/sql.html
+
+Linq:https://dotblogs.com.tw/Mystic_Pieces/2017/11/18/225549
+
+註解:簡單學會 select 、Insert 、Delete 、Update、GROUP BY、別名、WHERE 、And、ORDER BY、Join,Linq可後續再慢慢學
+
+MVC框架
+
+書籍
+跟著實務學習 ASP.NET MVC 5.x -- 打下前進 ASP.NET Core 的基礎 (使用C#2019) (簡單)
+完全精通微軟 Web 架構：ASP.Net Core 3 最新強實戰(稍難)
+
+免費教學網頁
+2014 iT 邦幫忙鐵人賽 使用ASP.NET MVC 實作購物網站 系列
+
+付費教學網頁
+https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab
+
+註解:書籍跟著實務學習是參照微軟範例的有註解版本，新手建議買書先看這本 或者直接看付費教學網頁比較快...
+
+開發環境
+
+使用IDE:visual studio 2019 community (請注意不是VsCode喔)
+
+資料庫:sql server 2014 北風資料庫 or MySql
+
+資料庫工具:ManagementStudio (sql server) or workbench (MySql)
+API測試工具:Postman
+
+發佈上版:Windows IIS or Auzure(雲端) 
+
+註解:發佈可以最後在學...
+
+建議學習路徑:C# -> SQL->Html(或者略過學Razor 但我建議還是要了解Html部分) ->ASP.Net MVC->ASP.Net MVC Core
+
+IDE如果不會操作 可以先把 Visual C# 2019 程式設計經典看完
+
+ASP.NET MVC 是一種網頁框架(Framework) 基礎語言還是要先學會....才會比較好搞懂
+後續會依照上述的內容簡單說明一下基礎架構的部分...
+
