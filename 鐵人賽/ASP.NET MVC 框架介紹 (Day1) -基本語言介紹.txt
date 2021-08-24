@@ -9,7 +9,7 @@
 
 免費教學網頁
 codecademy: https://www.codecademy.com/catalog
-MSDN:https: //docs.microsoft.com/zh-tw/dotnet/csharp/
+MSDN:https://docs.microsoft.com/zh-tw/dotnet/csharp/
 
 書籍
 深入淺出 C#, 3/e (Head First C#, 3/e)
@@ -52,7 +52,7 @@ MVC框架
 完全精通微軟 Web 架構：ASP.Net Core 3 最新強實戰(稍難)
 
 免費教學網頁
-2014 iT 邦幫忙鐵人賽 使用ASP.NET MVC 實作購物網站 系列
+2014 iT 邦幫忙鐵人賽 使用ASP.NET MVC 實作購物網站 系列(強烈推薦這個系列)
 
 付費教學網頁
 https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab
