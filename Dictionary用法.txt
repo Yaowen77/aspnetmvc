@@ -1,0 +1,35 @@
+Dictionary<string, string> MyDic = new Dictionary<string, string>( );
+
+// 建立字典
+private void CreateDictionary( )
+{
+    MyDic.Add( "Name", "Jack" );
+    MyDic.Add( "Blog", "Jack’s Blog" );
+    MyDic.Add( "Group", "KTV Group" );
+}
+
+// 查字典
+private String FindInDictionary( String FindMe )
+{
+    if ( true == ( MyDic.ContainsKey( FindMe ) ) )
+    {
+        return MyDic[ FindMe ];
+    }
+    else
+    {
+        return "Not Found";
+    }
+}
+
+// 巡整個字典
+private void ShowAllInDictionary( )
+{
+    foreach ( var OneItem in MyDic )
+    {
+        Console.WriteLine( "Key = " + OneItem.Key + ", Value = " + OneItem.Value );
+    }
+}
+
+
+
+http://code2study.blogspot.com/2012/01/c-dictionary.html
