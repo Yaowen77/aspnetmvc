@@ -125,7 +125,7 @@ if((a == b) || (c>a)){ // a µ¥©ób  ©ÎªÌ(|| ¦h§PÂ_¦¡¨ä¤@²Å¦X§Y¥i) c ¤j©ó a¶i¤J§PÂ
 
 bool a= false;
 
-if(!a){ //a ¬° false ¶i¤J§PÂ_¦¡ !¬Û¤Ïªº·N«ä
+if(!a){ //a ¬° true ¶i¤J§PÂ_¦¡ !¬Û¤Ïªº·N«ä
    Console.WriteLine(a);
 }
 
