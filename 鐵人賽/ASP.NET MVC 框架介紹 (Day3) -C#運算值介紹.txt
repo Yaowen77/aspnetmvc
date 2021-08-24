@@ -1,0 +1,148 @@
+钡帝ㄓ量量盽ノ笲衡....
+
++
+
+1+1=2
+
+-搭
+
+1-1= 0
+
+*
+
+2*2=4
+
+/埃
+	
+2/2 = 1
+
+%緇计	
+
+3/2 = 1 緇计1
+
+
+a++
+
+int a = 1
+a++;
+
+ a 2
+
+a--
+
+int a = 1
+a--;
+
+ a 0
+
+
+== 单
+
+int a= 2;
+int b= 2;
+
+if(a == b){ //2计 秈耞Α
+   Console.WriteLine(a);
+}
+
+
+!=ぃ单
+
+int a= 2;
+int b= 2;
+
+if(a != b){ //2计ぃ 秈耞Α
+   Console.WriteLine(a);
+}
+
+
+>
+
+int a= 3;
+int b= 2;
+
+if(a > b){ //a 緇 b秈耞Α
+   Console.WriteLine(a);
+}
+
+
+
+
+<
+
+int a= 2;
+int b= 3;
+
+if(a < b){ //a  b秈耞Α
+   Console.WriteLine(a);
+}
+
+
+
+>=┪单
+
+int a= 2;
+int b= 2;
+
+if(a >= b){ //a ┪单 b秈耞Α
+   Console.WriteLine(a);
+}
+
+
+<=┪单
+
+int a= 2;
+int b= 2;
+
+if(a <= b){ //a ┪单 b秈耞Α
+   Console.WriteLine(a);
+}
+
+
+&&
+
+int a= 2;
+int b= 2;
+int c = 3;
+
+if((a == b) && (c>a)){ // a 单b  τ(&& 耞Αゲ斗场才) c  a秈耞Α
+   Console.WriteLine(a);
+}
+
+
+||
+
+int a= 2;
+int b= 2;
+int c = 3;
+
+if((a == b) || (c>a)){ // a 单b  ┪(|| 耞Αㄤ才) c  a秈耞Α
+   Console.WriteLine(a);
+}
+
+
+!
+
+bool a= false;
+
+if(!a){ //a  false 秈耞Α !は種
+   Console.WriteLine(a);
+}
+
++=
+
+int a= 1;
+
+a+=2;
+
+a 3
+
+-=
+
+int a= 1;
+
+a-=2;
+
+a -1
+
+瓃琌盽ǎτゲノ 狦硂柑常ぃ琌剪...某Day1 膀娄粂ēC# т厩策戈方
