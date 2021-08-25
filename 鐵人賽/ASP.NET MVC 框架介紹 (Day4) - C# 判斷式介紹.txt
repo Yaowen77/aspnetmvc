@@ -1,0 +1,81 @@
+接著來講講常用的判斷式寫法....
+簡單來說以下就是玩攻略遊戲 在選擇選項的邏輯....
+
+   
+//單項if寫法
+            int a = 1;
+
+            if (a == 1)//條件成立
+            {
+                Console.Write(a);
+            }
+            else//條件不成成立
+            {
+                Console.Write("fail");
+            }
+
+
+            //多項if寫法
+            int b = 1;
+            int c = 2;
+
+            if (b > c)//條件一成立
+            {
+                Console.Write(b);
+            }
+            else if (b == c)//條件二成立
+            {
+                Console.Write(c);
+            }
+            else//上述都不成立
+            {
+                Console.Write(c);
+            }
+
+            //if簡寫
+            int aa = b>c ? 1 : 2;  //如果b>c aa= 1 否則 aa=2   ?代表if  :代表else
+
+            //switch
+            int e = 1;
+
+            switch (e)
+            {
+                case 1://e 等於 1
+                    Console.WriteLine("1");
+                    break;
+                case 2://e 等於 2
+                    Console.WriteLine("2");
+                    break;
+                case 3://e 等於 3
+                    Console.WriteLine("3");
+                    break;
+                default://全部都不符合走這個
+                    Console.WriteLine("fail");
+                    break;
+            }
+
+            //for 迴圈 寫法
+            for (int i = 2; i < 10; i++)
+            {
+                for (int j = 1; j < 10; j++)
+                {
+                    Console.WriteLine(i * j);
+                }
+            }
+
+            //foreach 寫法 
+            int[] numbers = { 4, 5, 6, 1, 2, 3, -2, -1, 0 };
+            foreach (int i in numbers)
+            {
+               Console.Write("{0} ", i);
+            }
+
+            //註解跟for迴圈差在 foreach 是專門處理集合的迴圈 集合是什麼 我後面會講....
+
+            //while 寫法
+            int n = 0;
+            while (n < 5) //n 小於5 進去判斷式
+            {
+                Console.Write(n);
+                n++;
+            }
