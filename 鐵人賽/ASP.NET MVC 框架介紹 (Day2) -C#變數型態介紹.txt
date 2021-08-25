@@ -92,3 +92,9 @@ var a = 1 ;(系統會默認 int)
 
 var a = "1" ;(系統會默認 string)
 
+
+註解5: 一般強型別是不可以預設null 如果要予許null 需在宣告變數型態加上?
+
+ex:
+bool? flag = null;
+

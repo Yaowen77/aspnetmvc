@@ -1,0 +1,84 @@
+接著來講講常用的集合寫法....
+
+Array(陣列): 是相同型別的集合 透過引索去取得元素 長度是固定的
+List(串列): 是相同型別的集合 透過引索去取得元素 長度是任意的
+Dictionary(字典): 是鍵值的集合 透過鍵去取得值 長度是任意的
+
+
+
+            //集合簡單來講就是宣告一個變數 包含了一組數字
+
+            //Array 寫法 (需一開始宣告固定長度)
+            int[] myIntArray = new int[5] { 1, 2, 3, 4, 5 };
+
+            //可利用foreach 將 集合裡面數字取出
+            foreach (int i in myIntArray)
+            {
+                Console.Write("\t{0}", i);
+            }
+
+            //ArrayList 寫法
+            
+            ArrayList myAL = new ArrayList();
+            myAL.Add("Hello");
+            myAL.Add("World");
+            myAL.Add("!");
+
+            //可利用foreach 將 集合裡面數字取出
+            foreach (Object obj in myAL)
+            {
+                Console.Write("   {0}", obj);
+            }
+
+            //List<T> 寫法(常用) 通常會將class給丟進去
+
+         public class Part
+        {
+            public string PartName { get; set; }
+
+            public int PartId { get; set; }
+        }
+     
+            List<Part> parts = new List<Part>();
+            parts.Add(new Part() { PartName = "crank arm", PartId = 1234 });
+            parts.Add(new Part() { PartName = "chain ring", PartId = 1334 });
+            parts.Add(new Part() { PartName = "regular seat", PartId = 1434 });
+            parts.Add(new Part() { PartName = "banana seat", PartId = 1444 });
+            parts.Add(new Part() { PartName = "cassette", PartId = 1534 });
+            parts.Add(new Part() { PartName = "shift lever", PartId = 1634 });
+
+            //可利用foreach 將 集合裡面取出
+            foreach (Part aPart in parts)
+            {
+                Console.WriteLine(aPart);
+            }
+
+            //註解
+            // List<Part> parts  我宣告一個parts 變數 那個變數是 List型別 而且型別裡面是Part Class
+            //new List<Part>();  要從電腦記憶體生成List 變數 需要用new
+
+
+            //當然可以不一定要放class string or int 其他型別也行...
+
+            List<string> dinosaurs = new List<string>();
+            dinosaurs.Add("Tyrannosaurus");
+            dinosaurs.Add("Amargasaurus");
+            dinosaurs.Add("Mamenchisaurus");
+            dinosaurs.Add("Deinonychus");
+            dinosaurs.Add("Compsognathus");
+
+            //可利用foreach 將 集合裡面取出
+            foreach (string dinosaur in dinosaurs)
+            {
+                Console.WriteLine(dinosaur);
+            }
+
+            //註解new完之後 系統會自行判斷無用途會啟動GC機制
+
+            //Dictionary 寫法 可自行建立自己要的索引
+            Dictionary<string, string> MyDic = new Dictionary<string, string>();
+            MyDic.Add("Name", "Jack");
+            MyDic.Add("Blog", "Jack’s Blog");
+            MyDic.Add("Group", "KTV Group");
+
+            //參考網址http://code2study.blogspot.com/2012/01/c-dictionary.html
