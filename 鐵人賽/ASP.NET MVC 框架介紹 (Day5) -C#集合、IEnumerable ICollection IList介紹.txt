@@ -82,3 +82,16 @@ Dictionary(字典): 是鍵值的集合 透過鍵去取得值 長度是任意的
             MyDic.Add("Group", "KTV Group");
 
             //參考網址http://code2study.blogspot.com/2012/01/c-dictionary.html
+
+
+另外來講講IEnumerable ICollection IList 這3種差異 ，因為後面MVC 架構會很常出現... 
+
+IEnumerable 可唯讀
+ICollection 可新增、修改、刪除 (包含IEnumerable 功能)
+IList 可排序(包含IEnumerable、 ICollection功能)
+
+簡單來講List是所有功能都有但效能最差
+IEnumerable 只能唯讀但效能最好
+
+按照功能排序：List<T> 〈  IList<T> 〈  ICollection<T>  〈 IEnumerable<T>
+按照性能排序：IEnumerable<T>《ICollection<T>《IList<T>《List<T>
