@@ -1,0 +1,109 @@
+接著來講講class一些基本概念....
+
+1.XXXX.cs
+看到所有cs 檔案就是一個Class(類別)
+
+2.所有C#程式都是由多個XXXX.cs(類別)組成 (MVC View那些除外..)
+
+理解上面說的部分接下來講一下Class(類別) 裡面結構部分
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+         }
+    }
+}
+
+
+namespace:專案名稱
+Program:Class(類別)名稱
+static:靜態函式(不用new)
+void:無回傳值
+Main:函式(funtion)名稱
+string[] args:函式傳入參數值
+
+
+主要常見的只要知道 namespace、class名稱即可 後續依照不同C#架構 funtion會不太一樣
+簡單來講寫任何函式基本上都要寫在class (Program)裡面 而不是外面喔~ 
+
+接下來講講funtion寫法
+
+ public void Get_Edit_Member(int id)
+        {
+//內容省略...
+}
+
+ex:我要呼叫Get_Edit_Member
+
+Get_Edit_Member(1);//1代表我傳入的參數
+
+public:存取權限
+void:無回傳值
+Get_Edit_Member:函式名稱
+int id:傳入函式參數
+
+
+存取權限說明
+public	沒有限制   (任何人可以存取)
+protected	父類別或繼承父類的子類別  (對子類別Public 其他類別Private)
+private(預設)	當前類別 (只有當前類別可以存取)
+
+註解:新手不用想那麼複雜絕大部分都是public...
+
+
+接下來講講return用法
+一般寫函式運算完畢通常都會回傳值
+
+public int total (int a)
+ {
+ return a;
+}
+
+public後面的int 表示要回傳變數型態(int)
+
+當然也可以是stirng
+
+public string total (string a)
+ {
+ return a;
+}
+ 
+
+當然也可以是bool
+
+public bool total (string bool)
+ {
+ return a;
+}
+
+Class也可以回傳
+
+ public Member Get_Edit_Member(string id){
+var result = new Member();
+return result;
+ }
+
+//Member 為Class
+
+List 搭配 Class回傳
+
+public static List<Member> Get_Member(string id)
+        {
+List<Member> result = new List<Member>();
+ return result;
+}
+
+
+泛型當然也ok
+
+public static T CallAPI <T>(string strParaUri)
+        {
+            //Login
+            T RetuenValue = default(T);
+return RetuenValue;
+}
+
+註解:只不過泛型回傳 要在函式名稱 後面加上 <T>

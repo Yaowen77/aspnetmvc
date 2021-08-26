@@ -1,0 +1,107 @@
+接著來講講常用的物件導向一些基本概念....
+
+1.封裝
+
+可能你知道套件函式名稱，但不知道裡面是什麼就叫封裝，簡單來講就是寫一個funtion 包成dll 去給別人使用 包成dll的這個動做就叫封裝..使用者不會知道dll是在內容什麼(看不到)。
+
+ex:
+
+Class1 aa = new Class1();
+double Sum = aa.Total(20);
+
+註解:呼叫Total這個函式但看不到函式內容，就叫封裝
+
+2.繼承
+
+繼承讓程式碼可以重複使用，簡單來講你只要繼承這個class 那麼該class的funtion就可以使用了，可以把常用的funtion寫在一個class讓其他class去繼承它，就可以不用一直寫重複的程式碼。
+
+ex:
+
+public class HomeController : Controller
+{
+       public ActionResult Index()
+        {
+            return View();
+        }
+}
+
+註解:這個是MVC 的Controller內容 : Controller代表它去繼承 Controller功能 就可以使用ActionResult之類的功能...。
+如果要繼承該Class就在原本的Class後面加上 :
+
+
+3.多型
+
+多型有分2種一種是方法多載一種是運算子多載
+
+方法多載:簡單來講就是會有一個全部都是funtion名稱的Class 搭配 另外一個Class都是函式內容
+
+ex:
+
+//介面方法class    
+interface IInterface
+    {
+
+        Result PutMember(string memberId, string memmberName, string connectionString);
+        Result PostMember(string memberId, string memmberName, string connectionString);
+    }
+
+
+//介面函式class     
+public class MyInterface : IInterface
+    {
+        public Result PutMember(string memberId, string memmberName,string connectionString)
+        {
+            //....內容省略
+         }
+
+        public Result PostMember(string memberId, string memmberName,string connectionString)
+        {
+            //....內容省略
+         }
+}
+
+
+//使用介面 Class用法
+ Models.Repositories.IInterface MyDB = new Models.Repositories.MyInterface();
+  [HttpPut("PutMember")]
+        public Result PutMember(string memberId, string memmberName)
+        {
+      var Config = new Config();
+            Config.connectionString = _config.GetValue<string>("connectionString");
+            var result = MyDB.PutMember( memberId,  memmberName, Config.connectionString);
+            return result;
+
+}
+
+註解:用途在於當函式一多就可以直接去介面方法class看函式名稱即可，不用特別去看函式內容方便程式撰寫。
+
+運算子多載:指在一個類別(class)中，定義多個名稱相同，但參數(Parameter)不同的方法(Method)。
+
+ex:
+
+public void Total (){
+//....內容省略
+}
+
+
+public void Total (int a){
+//....內容省略
+}
+
+public void Total (int a,int b){
+//....內容省略
+}
+
+
+4.覆寫(Override)是指子類別可以覆寫父類別的方法內容，使該方法擁有不同於父類別的行為。
+
+
+public virtual string aa (){
+  return "aa";
+}
+
+public override string aa (){
+  return "dd";
+}
+
+註解:簡單來講當函式有virtual 就可以使用override去改寫它的函式內容。
