@@ -1,0 +1,33 @@
+接著來講講try catch 部分....
+
+一般來說是要避免程式因為出現錯誤訊息掛掉的處理方式...
+
+
+try {
+  // 一般程式something
+}
+catch (Exception ex) {
+  //  例外狀況處理
+}
+
+
+
+try {
+  // 一般程式something
+}
+catch (Exception ex) {
+  //  例外狀況處理
+}
+finally{
+  //不管有沒有到catch 都要處理的something
+}
+
+接下來講講using用法...
+一般來說new 一個物件就會去吃記憶體，如果要釋放記憶體除了gc回收之外 也可以自行下Dispose()...using的使用方式就是會自動去下Dispose()
+
+using (var reader = new StringReader(manyLines))
+{
+   //something....
+}
+
+註解:using 完之後就會自動釋放new StringReader 的記憶體空間了...
