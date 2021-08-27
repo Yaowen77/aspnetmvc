@@ -65,6 +65,7 @@ MVC框架 (目前出到 .Net6)
 
 免費教學網頁
 2014 iT 邦幫忙鐵人賽 使用ASP.NET MVC 實作購物網站 系列(強烈推薦這個系列)
+MVC:https://dotblogs.com.tw/dog0416/Series?qq=%E3%80%8CASP%20.Net%20MVC%20%E5%9F%BA%E7%A4%8E%E8%AA%B2%E7%A8%8B%E3%80%8D
 
 付費教學網頁
 https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab(強烈推薦這個系列)
