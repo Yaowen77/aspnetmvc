@@ -1,0 +1,59 @@
+接下來講講 html + CSS + javascript + bootstrap基本介紹細節部分 Day1有提供教學支援連結...
+不過MVC C# 有Razor 語法 可以快速生成html部分...後續會講到初步先了解一下 html架構即可
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.a {
+  color: white;
+}
+
+
+#b {
+  background-color: lightblue;
+  color: black;
+  padding: 40px;
+  text-align: center;
+}
+
+</style>
+</head>
+<body>
+
+<div class="a">
+  <h2>hello1</h2>
+</div>
+
+<h1 id="b">hello2</h1>
+
+<input type="text" id="test">
+<input type="button" value="Show me" onclick="ShowValue()">
+
+<ul class="nav nav-pills nav-justified">
+
+</ul>
+
+</body>
+</html>
+
+<script type="text/javascript">
+function ShowValue(){
+　var v=document.getElementById("test").value;
+　alert(v);
+}
+</script>
+
+
+1.CSS 優先順序 !important >id > class > element
+
+2.id CSS 前面要# ex:#b
+
+3.class CSS 前面要. ex:.a
+
+4.javascript 通常使用的是id ex: id text
+
+5.bootstrap  通常使用的是Class ex:class="nav nav-pills nav-justified"
+
+6.<!DOCTYPE html> 只是宣告這份文件是Html5文件

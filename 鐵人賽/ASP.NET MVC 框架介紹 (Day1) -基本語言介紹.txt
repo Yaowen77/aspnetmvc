@@ -5,7 +5,7 @@
 
 基本需要學習技術如下(以下都是我自己念過的...)
 
-基礎語言:C# 
+基礎語言:C# (目前出到C#9.0)
 
 免費教學網頁
 codecademy: https://www.codecademy.com/catalog
@@ -53,7 +53,7 @@ https://j796160836.pixnet.net/blog/post/30530326
 
 註解:需要了解一下 後續在MVC 部分 設定檔 or 寫webapi的時候會用到
 
-MVC框架
+MVC框架 (目前出到 .Net6)
 
 書籍
 跟著實務學習 ASP.NET MVC 5.x -- 打下前進 ASP.NET Core 的基礎 (使用C#2019) (簡單)
@@ -69,7 +69,7 @@ https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab
 
 開發環境
 
-使用IDE:visual studio 2019 community (請注意不是Visual Studio Code喔)
+使用IDE:visual studio 2019 community (2022也行)(請注意不是Visual Studio Code喔)
 
 資料庫:sql server 2014 北風資料庫 or MySql
 
@@ -80,7 +80,8 @@ API測試工具:Postman
 
 註解:發佈可以最後在學...
 
-建議學習路徑:C# -> SQL->Html(或者略過學Razor 但我建議還是要了解Html部分) ->ASP.Net MVC->ASP.Net MVC Core
+建議學習路徑:C#(1.0~9.0) -> SQL(任意通用SQL語法)->Html5(或者略過學Razor 但我建議還是要了解Html部分) ->ASP.Net MVC->ASP.Net MVC Core->ASP.Net Net6
+
 
 IDE如果不會操作 可以先把 Visual C# 2019 程式設計經典看完
 
