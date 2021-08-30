@@ -1,0 +1,76 @@
+接著來講講資料庫連線的部分....
+
+
+
+Mysql
+
+ConnString = Server=127.0.0.1;userid=root; password=11111111; database=test
+
+// Ado 連線 Insert or Update or Delete           
+using (var conn = new MySqlConnection(ConnString))
+            {
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "Insert Into Category (CateType,Category,Category_Name,ModifyDate,ModifyEID) VALUES(@CateType,@Category,@Category_Name,Now(),@InputUser)";
+                    command.Parameters.AddWithValue("@CateType", 0);
+                    command.Parameters.AddWithValue("@Category", "0001");
+                    command.Parameters.AddWithValue("@Category_Name", "AA");
+                    command.Parameters.AddWithValue("@InputUser", "111");
+                    command.ExecuteNonQuery();
+                }
+            }
+
+
+public class Category
+    {
+        public int CateType { get; set; }
+
+        public string CategoryID { get; set; }
+
+        public string CategoryName { get; set; }
+}
+
+//Ado 連線  Select 
+var result = new Category();
+
+            using (var conn = new MySqlConnection(ConnString))
+            {
+
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "SELECT Category, Category_Name FROM Category WHERE Category = @Category And CateType = @CateType";
+                    command.Parameters.AddWithValue("@Category", "0001");
+                    command.Parameters.AddWithValue("@CateType", 0);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                result = new Category()
+                                {
+                                    CategoryID = (string)reader["Category"],
+                                    CategoryName = (reader.IsDBNull(reader.GetOrdinal("Category_Name"))) ? "" : (string)reader["Category_Name"]
+                                };
+                            }
+
+                            return result;
+                        }
+                        else
+                        {
+                            return result;
+                        }
+                    }
+                }
+            }
+
+
+//SQL Server Entity Framework
+
+需截圖待補 
