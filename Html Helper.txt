@@ -29,6 +29,40 @@ JS、CSS篇
                     "Select Gender",
                     new { @class = "form-control" })
 
+
+     @{var listItems = new List<SelectListItem>
+              {
+                  new SelectListItem { Text = "資訊管理系", Value="1" },
+                  new SelectListItem { Text = "財務金融系", Value="3" },
+                  new SelectListItem { Text = "行銷管理系", Value="4" }
+              };
+            }
+
+
+
+@Html.DropDownList("DepartmentId", new SelectList(listItems, "Value", "Text"), "-= 請選擇 = -")
+
+           @{var listItemsSex = new List<SelectListItem>
+                          {
+                          new SelectListItem { Text = "男", Value="M" },
+                          new SelectListItem { Text = "女", Value="F" },
+                      };
+                }
+
+
+@Html.DropDownList("UserSex", listItemsSex, "-= 請選擇 =-", htmlAttributes: new { @class = "form-control" })
+
+@Html.DropDownListFor(model => model.Category01, new SelectList(ViewBag.CategoryList, "categoryId", "categoryName"), htmlAttributes: new { @class = "form-control" })
+
+ @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>
+                            {
+                                        new SelectListItem() { Text = "資訊管理系", Value="1" },
+                                        new SelectListItem() { Text = "財務金融系", Value="3" },
+                                        new SelectListItem() { Text = "行銷管理系", Value="4" }
+                            }, "-= 請選擇 = -")
+
+
+
 @Html.Hidden("StudentId")
 @Html.HiddenFor(model => model. Hidden)
 
@@ -76,3 +110,7 @@ Form
 //與上面相同
 <form action="/Student/Create" enctype="multipart/form-data" id="CityId" method="post">
 </form>
+
+
+
+ @Html.EditorFor(model => model.UserApproved) //bool 是CheckBox  bool?是DropDownList
