@@ -1,0 +1,49 @@
+接著來講講new 建構值部分....
+
+public class Yaowen
+{
+
+   public Yaowen()
+   {
+    
+     //建構值
+   }
+
+
+   public int LeftHand()
+   {
+   
+      reutrn 1;
+   }
+
+}
+
+
+//使用時
+Yaowen yaowen =new Yaowen();
+
+
+註解:當要生成物件時必須先 用 new(動態)的方式生成它
+
+new簡單來講我就是要在程式當下生成一個物件(生成完當下會吃記憶體)，當生成時(new)必須幫它取一個名子(初始化)的動作就叫建構值
+生成完之後就可以使用物件的功能 
+ex:
+
+int a = yaowen.LeftHand(); //使用yaowen的手
+
+那static(靜態) 又是什麼? 簡單來講就是 static 的函式是專案啟動後就載入記憶體
+
+
+ex:
+
+private static int foot()
+{
+   reutrn 1;
+}
+
+//使用時
+
+int b = foot();
+
+
+註解:一般static使用時機會是把常用的函式寫成靜態，這樣在使用的時候會比較快(缺點是如果沒有使用還是占記憶體空間)

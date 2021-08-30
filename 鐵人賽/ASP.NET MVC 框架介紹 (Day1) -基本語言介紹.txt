@@ -12,6 +12,8 @@ codecademy: https://www.codecademy.com/catalog
 MSDN:https://docs.microsoft.com/zh-tw/dotnet/csharp/(強烈推薦這個系列)
 runoob:https://www.runoob.com/csharp/csharp-nullable.html
 dog0416:https://dog0416.blogspot.com/search/label/%E3%80%8CC%23%20%E5%9F%BA%E7%A4%8E%E8%AA%B2%E7%A8%8B%20%E3%80%8D
+iT 邦幫忙鐵人賽 C#與ASP.Net入門-我要成為工程師!! 系列
+https://adon988.hoohoo.top/blog/1184067/
 
 書籍
 深入淺出 C#, 3/e (Head First C#, 3/e)

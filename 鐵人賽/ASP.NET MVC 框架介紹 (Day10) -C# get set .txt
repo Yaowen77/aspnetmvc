@@ -1,0 +1,54 @@
+接著來講講get set部分....
+
+public class A
+{
+    
+    public string b; //欄位
+    public string c  //屬性
+    {
+        
+        get {
+            if (a != b )
+            {
+                return a;
+            }else
+            {
+                return "b";
+            }
+        }
+                
+    }
+}
+
+簡單來講get set 就是一個模板他可以讓使用者get(取得)值或者set(設定)值，依照模板規則去get(取得) or set(設定)值
+
+註解:欄位 跟屬性 2者差異是 屬性可以在裡面建立存取規則。
+
+
+//使用方式
+A aa = new A();
+
+aa.b = "1";
+aa.c = "2";
+
+ex:
+   public class Category
+    {
+        [Required]
+        [Display(Name = "類別編號")]
+        [StringLength(4, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]        
+        public string CategoryID { get; set; }
+
+        [Display(Name = "類別名稱")]
+        [StringLength(20, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]
+        public string CategoryName { get; set; }
+    }
+
+
+    List<Category> result = new List<Category>();
+
+
+  result.Add(new Category(){
+       CategoryID = "0001",
+       CategoryName = "AA"
+  });
