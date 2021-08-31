@@ -70,7 +70,3 @@ var result = new Category();
                 }
             }
 
-
-//SQL Server Entity Framework
-
-»ÝºI¹Ï«Ý¸É 
