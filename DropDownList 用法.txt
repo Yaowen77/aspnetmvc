@@ -1,0 +1,34 @@
+ 搭配ViewBag
+            #1  @Html.DropDownList("DepartmentId", ViewBag.DtListItem as SelectList, "-= 請選擇 = -",
+                                           new { @class = "form-control", @onChange = "SelectedValue(this)" })
+            <!-- 透過 ViewBag傳過來，所以檢視畫面的第一列，不需搭配任何 model -->
+
+            <br /><br />
+            直接寫ViewBag名稱。控制器裡面的程式 -  ViewBag.<b>DtListItem</b><br />
+            #2  @Html.DropDownList("DtListItem")
+
+            <br /><hr />
+            <br /><br />
+
+            @@Html.DropDownList<font color="red">For</font>的寫法，請注意看後面「HTML屬性」的寫法
+
+            <br /><br />  寫死的（固定、手動撰寫子選項）                    <!-- *******************************************  -->
+            #3  @Html.DropDownListFor(model => model.DepartmentId, new SelectList(new[] { "男", "女", "不願回答" }),
+                                 new { @class = "form-control", @onChange = "SelectedValue(this)" })
+
+
+            <br /><br />  搭配ViewBag
+            #4  @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DtListItem as SelectList,
+                                 new { @class = "form-control", @onChange = "SelectedValue(this)" })
+
+
+            <br /><br /><br />
+            把這段程式碼，另外寫在 Class1.cs 裡面。不寫在控制器裡面。<br />
+            <!-- **************************************************************************************** -->
+            @{
+                var x = new WebApplication1.ModelsDropDownList.Class1();
+            }
+
+            #5  @Html.DropDownList("DepartmentId", x.GetDDL() as SelectList, "-= 請選擇 = -",
+                                                   new { @class = "form-control", @onChange = "SelectedValue(this)" })
+            <!-- 透過 ViewBag傳過來，所以檢視畫面的第一列，不需搭配任何 model -->

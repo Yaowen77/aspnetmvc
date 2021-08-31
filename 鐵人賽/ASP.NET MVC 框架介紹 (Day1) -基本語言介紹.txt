@@ -5,7 +5,7 @@
 
 基本需要學習技術如下(以下都是我自己念過的...)
 
-基礎語言:C# (目前出到C#9.0)
+基礎語言:C#(Model、Controller) (目前出到C#9.0)
 
 免費教學網頁
 codecademy: https://www.codecademy.com/catalog

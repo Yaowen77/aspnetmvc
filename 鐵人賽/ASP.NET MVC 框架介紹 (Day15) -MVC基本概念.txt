@@ -1,0 +1,30 @@
+總算要進入MVC架構介紹了...前面整整14天是基礎中的基礎...如果不會一下子跳到MVC這裡很多人會看不懂
+會碰到的大概是一下子SQL語法不懂、一下子Html不懂、一下子C#語法不會，通通混在一起搞不清楚哪個是哪個...就會覺得超級難
+在Day1有提到MVC這3種個別需要用到的程式語言如下
+
+模型(Model):C#、 Sql
+
+控制器(Controller):C#
+
+檢視(View):Html、Css 、Jquery、bootstrap、JavaScript、Razor 、Angular (前端相關技術)
+
+
+MVC邏輯設計有個口訣:Model要重、Controller要輕、View要笨
+
+控制器(Controller) ：負責處理路由相關資訊，轉發Model資料給View來回應，因為要處理Model跟檢視的溝通所以不可以太複雜要"輕"。
+ 
+模型(Model) ：負責處理資料邏輯，因為資料很多邏輯很多所以很"重"。
+
+檢視(View) ：只負責處理顯示畫面UI，所以很"笨"因為只要負責UI。
+
+開啟MVC專案後可以看到以下資料夾
+
+AppStart - 網站啟動設定(含路由開始啟動的位置)
+Content - 存放前端套件、CSS的地方
+Controller - 所有控制器的原始碼
+fonts- 字型
+Models - 與模型(類別)相關的原始碼
+Scripts - 存放JavaScript檔案
+View - 所有檢視的原始碼，依據不同的Controller名稱會有對應名稱的目錄
+
+以上焦點會放在Controller、Models、View部分，後續會以這3個資料夾為主作介紹....
