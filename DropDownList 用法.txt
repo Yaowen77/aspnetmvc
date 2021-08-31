@@ -32,3 +32,28 @@
             #5  @Html.DropDownList("DepartmentId", x.GetDDL() as SelectList, "-= 請選擇 = -",
                                                    new { @class = "form-control", @onChange = "SelectedValue(this)" })
             <!-- 透過 ViewBag傳過來，所以檢視畫面的第一列，不需搭配任何 model -->
+
+
+    public class Class1
+    {
+
+        public SelectList GetDDL()
+        {
+            using (MVC_UserDB3Context _db = new MVC_UserDB3Context())
+            {
+                // 直接連結一個資料表，當作 DropDownList的資料來源。
+                var dt = _db.DepartmentTable2s.ToList();   // 這一列改成 ADO.NET程式，就能到資料庫撈取您要的數據
+                //                                                *********
+                //如果您不寫最後的 .ToList()的話，會出現錯誤訊息 --無法完成作業，因為 DbContext 已被處置了。
+
+                SelectList listItems = new SelectList(dt, "DepartmentId", "DepartmentName");
+                // 先寫 <option>子選項的 value，再寫 text
+                // 詳見  https://msdn.microsoft.com/zh-tw/library/dd505286(v=vs.118).aspx
+
+                return listItems;
+            }
+        }
+
+
+
+    }
