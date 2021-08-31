@@ -1,0 +1,128 @@
+接下來講講SQL基本語法介紹如下
+以下會講一些常用而且基礎的語法
+
+資料表查詢
+
+SELECT "欄位名" FROM "表格名";
+
+ex: 
+Select * From Member
+
+Select:選取
+*:全部
+From:來自於
+Member:哪張資料表
+
+如果要選擇資料表某一個欄位如下
+
+
+ex: 
+Select MemberID From Member
+
+資料表查詢判斷
+
+SELECT "欄位名" FROM "表格名"WHERE "條件";
+
+ex: 
+Select * From Member Where MemberID = '0001'
+
+要取得會員邊號0001 會員
+
+註解如果程式有碰到多個Where 用法會如下(加And)
+
+Select * From Member Where 1 = 1 And MemberID = '0001' And Type = 1
+
+註解:Where 1 = 1 是因為不確定第一個判斷是哪個欄位可以用 1 = 1 
+
+
+
+資料表範圍查詢
+
+SELECT "欄位名"
+FROM "表格名"
+WHERE "欄位名" IN ('值一', '值二', ...);
+
+ex:
+Select * From Member Where MemberID in('0001','0002')
+
+
+要取得會員邊號0001 、0002會員
+
+SELECT "欄位名"
+FROM "表格名"
+WHERE "欄位名" BETWEEN '值一' AND '值二';
+
+
+資料表區間查詢
+ex:
+
+SELECT *
+FROM Member
+WHERE BeginDate BETWEEN '2021/01/01' AND '2021/12/30';
+
+註解:常用於日期區間的判斷
+
+資料表區間模糊
+
+SELECT "欄位名"
+FROM "表格名"
+WHERE "欄位名" LIKE {模式};
+
+ex:
+
+SELECT *
+FROM Member
+WHERE MemberName LIKE '%A%';
+
+註解:模糊查詢 ，常用於需要比對字串(效能較差)
+
+
+資料表排序
+
+SELECT "欄位名"
+FROM "表格名"
+[WHERE "條件"]
+ORDER BY "欄位名" [ASC, DESC];
+
+ex:
+
+Select * From Member ORDER BY MemberID DESC;
+
+註解:ASC 是小到大 DESC 大到小排序
+
+資料表新增
+
+INSERT INTO "表格名" ("欄位1", "欄位2", ...)
+VALUES ("值1", "值2", ...);
+
+ex:
+INSERT INTO Member(MemberID, MemberName)
+VALUES ('0001', 'AAA');
+
+
+資料表修改
+
+UPDATE "表格名"
+SET "欄位1" = [新值]
+WHERE "條件"
+
+ex:
+
+UPDATE Member
+SET MemberName = 'VV'
+WHERE MemberID = '0001'
+
+
+資料表刪除
+
+DELETE FROM "表格名"
+WHERE "條件";
+
+ex:
+
+DELETE FROM Member
+
+註解:其實絕大部分不會下這個語法，因為要保存資料的完整性。
+
+
+簡單介紹到這邊後續請看https://www.1keydata.com/tw/sql/sqlselect.html

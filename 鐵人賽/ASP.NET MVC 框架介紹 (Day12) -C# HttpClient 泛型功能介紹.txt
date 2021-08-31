@@ -1,0 +1,95 @@
+接著來講講泛型的部分....
+
+簡單來說泛型就是傳入值、傳回值不固定的情況下這時候就可以使用泛型...
+下面我會舉例一個Call Api 範例
+
+   假設我預期要從http://localhost:999/api/nk/Login Call這個api 傳入值為 Login Class 回傳值為 Result Class 為下方範例
+
+   var user = apis.CallAPI<Result, Login>(Login, "/api/nk/Login");    
+
+    //Login 類別
+    public class Login
+    {
+
+        public string UserID { get; set; }
+        public string UserPwd { get; set; }
+   }
+
+   //Result 類別
+    public class Result
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
+
+        public string Stauts { get; set; }
+    }
+
+
+
+假設我預期要從http://localhost:999/api/nk/Member Call這個api 傳入值為 Member Class 回傳值為 Result2 Class 為下方範例
+
+
+var user = apis.CallAPI<Result2, Member>(Member, "/api/nk/Member");    
+
+    //Member 類別
+    public class Login
+    {
+
+        public string MemberID { get; set; }
+        public string MemberPwd { get; set; }
+   }
+
+
+   //Result2 類別
+    public class Result
+    {
+        public string Code2 { get; set; }
+        public string Message2 { get; set; }
+
+        public string Stauts2 { get; set; }
+    }
+
+
+       //泛型 funtion
+       /// <summary>
+        /// 呼叫API
+        /// </summary>
+        /// <typeparam name="T">回傳之型別</typeparam>
+        /// <typeparam name="T1">傳入之型別</typeparam>
+        /// <param name="t1">傳入之型別</param>
+        /// <param name="strParaUri">API URI</param>
+        /// <returns>API回傳訊息</returns>
+        public static T CallAPI <T,T1>(T1 t1, string strParaUri)
+        {
+            //Login
+            T RetuenValue = default(T);
+         
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri("http://localhost:999");
+                HttpResponseMessage response = null;
+                // 將 data 轉為 json
+                string json = JsonConvert.SerializeObject(t1);
+                // 將轉為 string 的 json 依編碼並指定 content type 存為 httpcontent
+                HttpContent contentPost = new StringContent(json, Encoding.UTF8, "application/json");
+                response = httpClient.PostAsync(strParaUri, contentPost).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    
+                    RetuenValue = JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
+                }
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return RetuenValue;
+        }
+       
+    }
+
+註解:使用泛型如果有回傳值需在static後面加上 T funtion名稱後面加上<T>
+     如果有傳入值則要在funtion名稱後面加上<T1>
+
+由上面範例可以很清楚資料當我使用呼叫APIfuntion 傳入值、傳回值不固定的情況下(資料型態不見得每次都一樣)，就可以泛型，好處在於可以節省程式碼。
