@@ -1,0 +1,21 @@
+ public partial class UserTable2
+    {
+        [Key]    // 主索引鍵（P.K.）
+        public int UserId { get; set; }
+
+ 
+
+        //***************************************************************************
+        //***  修改重點！！  *******************************************************
+        // 搭配 DropDownList控制器底下的 Create3動作
+        [NotMapped]    // 這個屬性 "不" 與資料表的欄位，做對應
+        public List<DepartmentTable2> DepartmentCollection { get; set; }
+        //                                                                    ***********
+        //***************************************************************************
+
+
+        public virtual DepartmentTable2 DepartmentTable2s { get; set; }   // 注意！後面是複數（s）
+    }
+
+
+[NotMapped]  屬性
