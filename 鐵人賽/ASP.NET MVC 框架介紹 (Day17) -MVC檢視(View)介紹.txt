@@ -1,0 +1,156 @@
+接下來講講View 部分...
+
+在控制器的ActionResult Index() 上方可點選右鍵新增檢視預設範本有Create 、Delete 、Edit 、Detail 、List 
+首先我先講講List  部分...範本先選List  模型類別選 Class1
+
+ public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();//跑到這段的時候會跳到顯示畫面 在方案總管-> View資料夾底下->Home資料夾->Index.cshtml
+        }
+   }
+
+在Day16 有在Model資料夾底下簡單建立一個簡單的 Class1.cs模型如下
+
+Model  
+public class Class1
+    {
+        public string test { get; set; }
+    }
+
+Controller
+     
+ public ActionResult Index()
+        {
+            List<Models.Class1> testList = new List<Models.Class1>
+            {
+                new Models.Class1 { test = "aa" },
+                new Models.Class1 {test = "bb" },
+                new Models.Class1 { test = "cc" },
+                new Models.Class1 { test = "dd" }
+            };
+
+            return View(testList);
+        }
+
+View
+
+@model IEnumerable<WebApplication1.Models.Class1>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.test)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.test)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit") 
+            @Html.ActionLink("Details", "Details") 
+            @Html.ActionLink("Delete", "Delete")
+        </td>
+    </tr>
+}
+
+</table>
+
+1.@model 是一個關鍵字保留字 (宣告類型) 指的是資料屬性
+2.下方的Model 是控制器傳來的類別檔的值
+3.IEnumerable(集合)是Controller testList 的資料型態
+4.@Html.DisplayNameFor為Razor語法
+5.class="table" 使用前端框架bootstrap
+6.Razor註解寫法@*   *@
+7.html註解寫法 <!-- -->
+8.@開頭表示 在 此畫面開始使用C#語法
+9.<tr> </tr> 請參照Day1 Html教學部分...
+
+
+Razor的基本使用方法如下：
+
+"@" + 變數名稱 的方式，就可以輸出程式中的變數
+@UserName
+
+使用C#語法@{ } 
+@{
+    var MemberID = "1111";
+}
+
+註解
+@*   *@
+
+
+引用外部Js
+ <script src="~/Scripts/Export.js"></script>
+
+超連結
+@Html.ActionLink("關於我們", "About","Home") 
+html翻譯為:<a href="https://www.XXXXX.com/Home/About">關於我們< /a>
+
+
+
+TextBox & TextArea
+
+@Html.TextBox("Textbox")
+@Html.TextAreaFor(model => model.textbox)
+ 
+
+
+Hidden
+
+@Html.Hidden(“Hidden")
+@Html.HiddenFor(model => model. Hidden)
+ 
+
+
+Password
+
+@Html.Password(" Html.Password ")
+@Html.PasswordFor(model => model.Password)
+ 
+
+
+RadioButton
+
+@Html.RadioButton("RadioButton", 3)
+@Html.RadioButton(model => model.RadioButton, 3)
+ 
+
+
+CheckBox
+
+@Html.CheckBox("CheckBox1")
+@Html.CheckBoxFor(“model => model.CheckBox1")
+ 
+
+
+label
+
+@Html.Label("xxx")
+@Html.LabelFor(model => model.ID)
+
+
+註解:多For的差異就是在從Controller傳資料的Model賦予強型別，程式比較不容易寫錯
+
+ex:
+
+@Html.DisplayNameFor(model => model.test)
+
+我在Class1.cs有宣告 test
+
+參考資料:https://dotblogs.com.tw/dog0416/2016/04/06/110004

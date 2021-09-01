@@ -99,3 +99,8 @@ ASP.NET MVC 是一種網頁框架(Framework) 基礎語言還是要先學會....才會比較好搞懂
 
 個人建議學習方式會是 影音課程>書本>網路零碎範例
 
+後續講解內容
+
+ASP.NET Web版本為:ASP.Net MVC5  Framework4.7.2
+
+ASP.NET Web api版本為:ASP.Net MVC Core 3.1
