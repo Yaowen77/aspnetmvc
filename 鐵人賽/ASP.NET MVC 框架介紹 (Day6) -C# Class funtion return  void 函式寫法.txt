@@ -51,7 +51,7 @@ public	沒有限制   (任何人可以存取)
 protected	父類別或繼承父類的子類別  (對子類別Public 其他類別Private)
 private(預設)	當前類別 (只有當前類別可以存取)
 
-註解:新手不用想那麼複雜絕大部分都是public...
+註解:不用想那麼複雜絕大部分都是public...
 
 
 接下來講講return用法

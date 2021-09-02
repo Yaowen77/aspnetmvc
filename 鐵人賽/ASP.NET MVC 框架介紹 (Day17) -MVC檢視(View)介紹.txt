@@ -103,48 +103,6 @@ Razor的基本使用方法如下：
 html翻譯為:<a href="https://www.XXXXX.com/Home/About">關於我們< /a>
 
 
-
-TextBox & TextArea
-
-@Html.TextBox("Textbox")
-@Html.TextAreaFor(model => model.textbox)
- 
-
-
-Hidden
-
-@Html.Hidden(“Hidden")
-@Html.HiddenFor(model => model. Hidden)
- 
-
-
-Password
-
-@Html.Password(" Html.Password ")
-@Html.PasswordFor(model => model.Password)
- 
-
-
-RadioButton
-
-@Html.RadioButton("RadioButton", 3)
-@Html.RadioButton(model => model.RadioButton, 3)
- 
-
-
-CheckBox
-
-@Html.CheckBox("CheckBox1")
-@Html.CheckBoxFor(“model => model.CheckBox1")
- 
-
-
-label
-
-@Html.Label("xxx")
-@Html.LabelFor(model => model.ID)
-
-
 註解:多For的差異就是在從Controller傳資料的Model賦予強型別，程式比較不容易寫錯
 
 ex:
@@ -153,4 +111,4 @@ ex:
 
 我在Class1.cs有宣告 test
 
-參考資料:https://dotblogs.com.tw/dog0416/2016/04/06/110004
+後續常用的Razor語法可參考:https://dotblogs.com.tw/dog0416/2016/04/06/110004

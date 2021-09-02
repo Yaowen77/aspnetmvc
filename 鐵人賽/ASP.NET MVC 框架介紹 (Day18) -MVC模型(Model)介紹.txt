@@ -1,0 +1,110 @@
+接下來講講Model 部分...
+
+簡單來說Model負責與資料庫溝通的相關邏輯，或者定義模板(.cs)，或是使用Entity Framework自動產生資料庫對應的模板(類別(.cs))後...交給Controoler去處理..
+
+
+//Category.cs 類別檔  
+public class Category
+    {
+
+        public int CateType { get; set; }
+        public string CategoryID { get; set; }
+        public string CategoryName { get; set; }
+
+        public Category()//建構值
+        {
+
+        }
+
+        public static List<Category> Get_Gategory(int id)
+        {
+
+            List<Category> result = new List<Category>();
+            string connectionString = GlobalFunction.GlobalConnString;
+
+            using (var conn = new MySqlConnection(connectionString))
+            {
+
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "SELECT Category, Category_Name FROM Category WHERE CateType = @CateType";
+                    command.Parameters.AddWithValue("@CateType", id);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                result.Add(new Category()
+                                {
+                                    CategoryID = (string)reader["Category"],
+                                    CategoryName = (reader.IsDBNull(reader.GetOrdinal("Category_Name"))) ? "" : (string)reader["Category_Name"],
+                                });
+                            }
+                            return result;
+                        }
+                        else
+                        {
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+}
+
+上方public string CategoryName 就是類別檔的模板， 接著再用Get_Gategory函式使用Ado 連線存在List 回傳給Controoler
+
+
+//CategoryController.cs 控制器
+
+public ActionResult Index(string id){
+    var category = Category.Get_Category(SearchString, type);
+    return View(category);
+}
+
+Controoler收到資料後再透過return View() 將List資料丟給顯示畫面
+
+
+
+
+//Index.cshtml 顯示畫面
+
+@model IEnumerable<WebApplication1.Models.Category.Category>
+<table class="table">
+    <tr>
+        <th width="70">
+            操作
+        </th>
+        <th width="70">
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CategoryName)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    @foreach (var md in this.Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { Type = ViewBag.Type, categoryID = md.CategoryID }, new { @class = "glyphicon glyphicon-pencil" })
+            </td>
+            <td>
+
+                @Html.ActionLink("刪除", "Delete", new { Type = ViewBag.Type, categoryID = md.CategoryID }, new { @class = "glyphicon glyphicon-trash", @onclick = "return Confirm_Form('"+ md.CategoryID + "')" })
+            </td>
+            <td>@md.CategoryID</td>
+            <td>@md.CategoryName</td>
+        </tr>
+    }
+</table>
+
+

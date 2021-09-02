@@ -4,8 +4,6 @@
 以下是以ASP.NET MVC 基本介紹 + 學習資源 + 需要學會什麼樣的語言 但不會著重在View的部分
 
 
-目標職缺:ASP.NET MVC 網頁工程師
-
 基本需要學習技術如下
 
 基礎語言:C#(Model、Controller) (目前出到C#9.0)
@@ -77,7 +75,7 @@ MVC:https://dog0416.blogspot.com/search/label/%E3%80%8CASP%20.Net%20MVC%20%E5%9F
 付費教學網頁
 https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab(強烈推薦這個系列)
 
-註解:書籍跟著實務學習是參照微軟範例的有註解版本，新手建議買書先看這本 或者直接看付費教學網頁比較快...
+註解:書籍跟著實務學習是參照微軟範例的有註解版本，個人建議買書先看這本 或者直接看付費教學網頁比較快...
 
 開發環境
 
