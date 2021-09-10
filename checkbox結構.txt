@@ -1,0 +1,69 @@
+    public class CheckBoxListViewModel
+    {
+        public List<MyListItem> DepartmentCblVM { get; set; }
+        //        ********************************** 
+        // 重點！為了搭配 CheckBoxList，這裡是一個 List<T>
+    }
+
+
+    //***********************************************************************
+    public class MyListItem
+    {   //            ****************************
+        public int DId { get; set; }     // 子選項的 Value
+        public string DName { get; set; }     // 子選項的 Text
+        public bool IsChecked { get; set; }   // 是否被勾選？ true or false
+    }
+
+
+           // (1). 從DB找出所有科系名稱與代號
+            var DDLs = _db.DepartmentTable3s;
+
+            // (2). 把這些科系資料，放入 CheckBoxList的「子選項」
+            var CBL = new List<MyListItem>();
+            // ViewModel（檔名 /ModelsCheckBoxList/CheckBoxListViewModel.cs）
+            foreach (var d in DDLs)
+            {   // 把 CheckBoxList清單的「子選項」，一個一個放進 List
+                CBL.Add(new MyListItem
+                {
+                    DId = d.DepartmentId,
+                    DName = d.DepartmentName,
+                    IsChecked = false
+                });
+            }
+
+            // 舊的寫法：
+            //CheckBoxListViewModel result = new CheckBoxListViewModel();
+            //result.DepartmentCblVM = new List<DepartmentCheckBoxLists>();
+
+            // 新的寫法：
+            CheckBoxListViewModel resultVM = new CheckBoxListViewModel
+            {
+                DepartmentCblVM = CBL
+                // (3). 把已經完成的 CheckBoxList放進 ViewModel的第一個屬性 (DepartmentCblVM)
+            };
+
+
+
+            @for (int idx = 0; idx < Model.DepartmentCblVM.Count; idx++)
+            {
+                <tr>
+                    <td>
+                        @*  ******************************************************  *@
+                        @Html.HiddenFor(x => Model.DepartmentCblVM[idx].DId)
+                        @* 用來表示 CheckBoxList的 Value *@
+
+                        @* 重點！！CheckBox的HTML標籤使用「name」屬性，而非 id。  <input type="CheckBox" name="重點！！"> *@
+                        CheckBoxFor :  @Html.CheckBoxFor(x => Model.DepartmentCblVM[idx].IsChecked)     @* 用來表示 CheckBoxList，是否被勾選？ *@
+
+                        &nbsp;&nbsp;&nbsp;
+
+                        DisplayFor : @Html.DisplayFor(x => Model.DepartmentCblVM[idx].DName)
+                        @*  ******************************************************  *@
+                        @* 如果沒有這個隱藏欄位，無法抓到「被勾選」的 CheckBoxList「文字(Text)」 *@
+                        @Html.HiddenFor(x => Model.DepartmentCblVM[idx].DName)
+                        @* 用來表示 CheckBoxList的 Text *@
+                        @* 子選項的文字（Text），給 User看的。通常我們後端程式不會用到它。 *@
+
+                    </td>
+                </tr>
+            }
