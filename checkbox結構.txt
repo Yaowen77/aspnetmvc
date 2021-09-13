@@ -67,3 +67,26 @@
                     </td>
                 </tr>
             }
+
+
+
+//推薦下面這種作法
+                    @{
+                        int i = 0;
+
+                        foreach (var item in Model.DepartmentCblVM)
+                        {
+                            @Html.Hidden("DepartmentCblVM[" + i + "].DId", item.DId) @* 用來表示 CheckBoxList的 Value *@
+
+                            @Html.CheckBox("DepartmentCblVM[" + i + "].IsChecked", item.IsChecked) @* 用來表示 CheckBoxList，是否被勾選？ *@
+
+                            @item.DName @* 子選項的文字（Text），給 User看的。通常我們後端程式不會用到它。 *@
+                            @*  也可以寫成下面這兩種：
+                @Html.DisplayFor(item.DName)
+                @Html.LabelFor(item.DName)
+                            *@
+
+                            i++;
+                            @:<br />
+                        }
+                    }
