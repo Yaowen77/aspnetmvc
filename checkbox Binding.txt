@@ -1,0 +1,18 @@
+1.預設產生的CheckBox
+
+@Html.EditorFor(model=>model.UserApproved) <br/>
+
+2. 
+@Html.CheckBoxFor(model=>model.UserApproved) <br/>
+
+3.
+
+@Html.CheckBoxFor(model=>model.UserApproved,new{@checked = (Model.UserApproved ? "Checked":stirng.Empty)}) 
+
+4.
+
+@Html.CheckBoxFor(model=>model.UserApproved,htmlAttributes:new{@checked = (Model.UserApproved ? "Checked":stirng.Empty)}) 
+
+5.
+
+@Html.CheckBoxFor(UserApproved,Convert.ToBoolean(Model.UserApproved)) 
