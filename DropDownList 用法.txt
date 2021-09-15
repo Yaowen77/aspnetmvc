@@ -1,4 +1,16 @@
- 搭配ViewBag
+ public class DDLViewModel
+    {
+        // 如果不喜歡直接呈現 VeiwModel（類別檔）的屬性名稱（欄位），可以透過 [DisplayName("科系代號")]來修正。
+
+        //[DisplayName("科系代號")]  //// [DisplayName("科系代號")] 會用到 System.ComponentModel 命名空間
+        public string DdlId { get; set; }     // 下拉式選單(Ddl) 的 Id名稱、控制項的 Id名稱
+
+        public IList<SelectListItem> DdlListItem { get; set; }   // 下拉式選單的「子選項」列表
+        // SelectListItem需要用到 System.Web.Mvc 命名空間
+    } 
+-------------------------------------------------------------------------------------------------
+
+搭配ViewBag
             #1  @Html.DropDownList("DepartmentId", ViewBag.DtListItem as SelectList, "-= 請選擇 = -",
                                            new { @class = "form-control", @onChange = "SelectedValue(this)" })
             <!-- 透過 ViewBag傳過來，所以檢視畫面的第一列，不需搭配任何 model -->
@@ -35,7 +47,7 @@
 
 
             
-
+-------------------------------------------------------------------------------------------------
     public class Class1
     {
 
@@ -60,7 +72,7 @@
 
     }
 
-
+-------------------------------------------------------------------------------------------------
 eum 寫法
 
   (1).新版MVC v5.1 增加的新功能。--
@@ -92,7 +104,7 @@ eum 寫法
         public Gender UserSex { get; set; }    // 請搭配最下方的 public enum Gender
         ////***************************************************************************
 
-
+-------------------------------------------------------------------------------------------------
     public enum Gender
     {   // 列舉程式名稱中不能包含空白字元。https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/enum
         [Display(Name = "男（Male）")]

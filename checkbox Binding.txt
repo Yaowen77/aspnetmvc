@@ -16,3 +16,13 @@
 5.
 
 @Html.CheckBoxFor(UserApproved,Convert.ToBoolean(Model.UserApproved)) 
+
+
+6.
+
+
+ViewData["CheckBoxList"] += "<br /><input type=\"checkbox\" name=\"DepartmentId\" value=\"" + d.DepartmentId + "\"> " + d.DepartmentName;
+@Html.Raw(ViewData["CheckBoxList"])
+
+µ²ªG
+<input type="checkbox" checked="checked" name="DepartmentId" value="1">

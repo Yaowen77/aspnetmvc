@@ -13,7 +13,29 @@
         public string DName { get; set; }     // 子選項的 Text
         public bool IsChecked { get; set; }   // 是否被勾選？ true or false
     }
+-------------------------------------------------------------------------------------------------
 
+
+    public class CheckBoxListViewModel3
+    {
+        //******************************************************************
+        public UserTable3 UserVM { get; set; }
+        //比上一個範例（CheckBoxListViewModel.cs），多了這個屬性。
+        //*******************************************************************
+
+        public List<MyListItem3> DepartmentCblVM { get; set; }
+        // 重點！為了搭配 CheckBoxList，這裡是一個 List<T>
+    }
+
+    //***********************************************************************
+    public class MyListItem3
+    {   //            *******************************
+        public int DId { get; set; }     // 子選項的 Value
+        public string DName { get; set; }     // 子選項的 Text
+        public bool IsChecked { get; set; }   //是否被勾選？ true or false
+    }
+
+-------------------------------------------------------------------------------------------------
 
            // (1). 從DB找出所有科系名稱與代號
             var DDLs = _db.DepartmentTable3s;
@@ -43,6 +65,7 @@
             };
 
 
+-------------------------------------------------------------------------------------------------
 
             @for (int idx = 0; idx < Model.DepartmentCblVM.Count; idx++)
             {
@@ -69,6 +92,117 @@
             }
 
 
+-------------------------------------------------------------------------------------------------
+public ActionResult Details(int _ID = 1)
+        {
+            CheckBoxListViewModel3 resultVM = new CheckBoxListViewModel3();
+            var CBL = new List<MyListItem3>();   // ViewModel（檔名 CheckBoxListViewModel3.cs）
+            //****************************************************************************
+            // (1). 把這個人的資料，放入 ViewModel的第一個類別 UserVM裡面
+            //****************************************************************************
+            // 作法二。正確執行
+            #region
+
+            //foreach (var u in _db.UserTable3s.Where(x => x.UserId == _ID))  // LINQ透過 .Where() 找出特定的一筆記錄（一個人）
+            //{
+            //    resultVM.UserVM = u;   // 把這個人的資料，放入 ViewModel的第一個類別 UserVM裡面                                
+
+            //    // 轉成「整數」陣列，不然的話，用字串比對可能出錯。例如："13", "15"，字串比對時都符合"1"。
+            //    var strArray = from item in u.DepartmentId.Split(',')   // .Split()函數請用「單引號」。
+            //                           select Convert.ToInt32(item);
+            ////                                     ********************** 轉成「整數」來比對，不會有「字串（下方 "方法四"）」的錯誤 
+            //
+            //    #region   // *** CheckBoxList 符合條件的，自動Binding *********************
+            //    foreach (var d in _db.DepartmentTable3s)
+            //    {   // *** 重點！！ ***  字串陣列裡面的「值」，是否符合某一個整數？ true or false
+            //
+            //        //   ************************************************************************************** 
+            //        foreach (var sa in strArray)   {  // 這個 foreach迴圈可以省略，請看下個寫法（方法三）
+            //            //**************************************************************************************
+            //            if (sa == d.DepartmentId)   // 用「整數」來比對，不要用「字串」比對
+            //            {   // 符合的就預設為「被勾選」。 IsChecked屬性 = true
+            //                CBL.Add(new MyListItem3 { DId = d.DepartmentId, DName = d.DepartmentName, IsChecked = true });
+            //            }
+            //            else   {
+            //                CBL.Add(new MyListItem3 { DId = d.DepartmentId, DName = d.DepartmentName, IsChecked = false });
+            //            }
+            //        }
+
+            //    } // end of foreach (d)
+            //    #endregion
+            //}  // end of foreach (u)
+            #endregion
+
+
+            // 作法三。正確執行
+            #region
+            foreach (var u in _db.UserTable3s.Where(x => x.UserId == _ID))  // LINQ透過 .Where() 找出特定的一筆記錄（一個人）
+            {
+                resultVM.UserVM = u;   // 把這個人的資料，放入 ViewModel的第一個 UserVM裡面
+
+                // 轉成「整數」陣列，不然的話，用字串比對可能出錯。例如："13", "15"，字串比對時都符合"1"。
+                var intArray = from item in u.DepartmentId.Split(',')   // .Split()函數請用「單引號」。
+                               select Convert.ToInt32(item);
+                //                               ********************** 轉成「整數」來比對，不會有「字串（下方 "方法四"）」的錯誤 
+
+                #region   // *** CheckBoxList 符合條件的，自動Binding *********************
+                foreach (var d in _db.DepartmentTable3s)
+                {   // *** 重點！！ ***  字串陣列裡面的「值」，是否符合某一個值？ true or false
+                    //******************************************************************************************
+                    if (intArray.Contains(d.DepartmentId))   // 比上一個寫法（二）省下一個 foreach迴圈。
+                    {   // 符合的就預設為「被勾選」。 IsChecked屬性 = true
+                        //****************************************************************************************
+                        CBL.Add(new MyListItem3 { DId = d.DepartmentId, DName = d.DepartmentName, IsChecked = true });
+                    }
+                    else
+                    {
+                        CBL.Add(new MyListItem3 { DId = d.DepartmentId, DName = d.DepartmentName, IsChecked = false });
+                    }
+                } // end of foreach (d)
+                #endregion
+            }  // end of foreach (u)
+            #endregion
+
+
+  
+
+
+            // 作法五，透過 ViewData來做。正確執行（傳統HTML表單 <input type=checkbox>）
+            ViewData["CheckBoxList"] = "";    // 把組合好的HTML碼，丟到檢視畫面上
+            #region
+            foreach (var u in _db.UserTable3s.Where(x => x.UserId == _ID))  // LINQ透過 .Where() 找出特定的一筆記錄（一個人）
+            {
+                resultVM.UserVM = u;   // 把這個人的資料，放入 ViewModel的第一個類別 UserVM裡面
+                // 轉成「整數」陣列，不然的話，用字串比對可能出錯。例如："13", "15"，字串比對時都符合"1"。
+                var intArray = from item in u.DepartmentId.Split(',')   // .Split()函數請用「單引號」。
+                               select Convert.ToInt32(item);
+                //                               ********************** 轉成「整數」來比對，不會有「字串（上方 "方法四"）」的錯誤   
+
+                #region   // *** CheckBoxList 符合條件的，自動Binding *********************
+                foreach (var d in _db.DepartmentTable3s)
+                {   // *** 重點！！ ***  字串陣列裡面的「值」，是否符合某一個值？ true or false
+                    if (intArray.Contains(d.DepartmentId))   // 比上一個寫法（方法二）省下一個 foreach迴圈。
+                    {   // 符合的就預設為「被勾選」。 IsChecked屬性 = true
+                        ViewData["CheckBoxList"] += "<br /><input type=\"checkbox\" checked=\"checked\" name=\"DepartmentId\" value=\"" + d.DepartmentId + "\">" + d.DepartmentName;
+                    }
+                    else
+                    {
+                        ViewData["CheckBoxList"] += "<br /><input type=\"checkbox\" name=\"DepartmentId\" value=\"" + d.DepartmentId + "\"> " + d.DepartmentName;
+                    }
+                } // end of foreach (d)
+                #endregion
+            }  // end of foreach (u)
+            #endregion
+
+
+            //****************************************************************************
+            // (2). 把已經完成的 CheckBoxList放進 ViewModel的第二個 DepartmentCblVM
+            //****************************************************************************
+            resultVM.DepartmentCblVM = CBL;
+
+            return View(resultVM);
+        }
+-------------------------------------------------------------------------------------------------
 
 //推薦下面這種作法
                     @{
@@ -90,3 +224,5 @@
                             @:<br />
                         }
                     }
+
+-------------------------------------------------------------------------------------------------
