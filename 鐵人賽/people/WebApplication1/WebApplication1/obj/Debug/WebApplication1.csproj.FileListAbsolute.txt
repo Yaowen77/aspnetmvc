@@ -84,3 +84,13 @@ D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplicati
 D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\EntityFramework.dll
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\EntityFramework.SqlServer.dll
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\EntityFramework.xml
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\EntityFramework.SqlServer.xml
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\zh-Hant\EntityFramework.resources.dll
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\PagedList.dll
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\PagedList.Mvc.dll
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\PagedList.xml
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\PagedList.Mvc.xml
+D:\Frontend_Space\ChuuKa\aspnetmvc\鐵人賽\people\WebApplication1\WebApplication1\bin\zh-Hant\EntityFramework.SqlServer.resources.dll
