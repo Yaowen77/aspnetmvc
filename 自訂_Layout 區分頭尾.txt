@@ -1,0 +1,58 @@
+可在Layout 加入
+
+
+    <header> //google 爬蟲可以找到最佳化
+            @* 是否已在頁面中，設定指定的區段？ *@
+            @if (IsSectionDefined("header"))
+            {
+                @RenderSection("header");
+            }
+            else
+            {
+                @:抱歉！！並沒有設定 &lt;header&gt;區段
+            }
+        </header>
+
+      //文章內文
+      <article>
+            @RenderBody()
+        </article>
+
+        <footer>
+            @* 是否已在頁面中，設定指定的區段？ *@
+            @if (IsSectionDefined("footer"))
+            {
+                @RenderSection("footer");
+            }
+            else
+            {
+                @:抱歉！！並沒有設定 &lt;footer&gt;區段
+            }
+        </footer>
+
+
+在View裡面 加入
+
+
+@section Header {
+    <font color="blue">這裡是Header區段</font>
+    <nav>
+        <ul>
+            <li><a href="請放您的超連結URL網址">首頁（HomePage）</a></li>
+            <li><a href="請放您的超連結URL網址">聯絡方式（Contact Me）</a></li>
+            <li><a href="請放您的超連結URL網址">關於我（About Me）</a></li>
+        </ul>
+    </nav>
+    <hr />
+    <br />
+}
+
+
+@section Footer {
+    <br />
+    <br />
+    <hr />
+    <font color="green">這裡是Footer區段</font>
+    <h3 align="center"> ASP.NET MVC 學習網站 - 2018年 - MIS2000 Lab.</h3>
+    <hr />
+}

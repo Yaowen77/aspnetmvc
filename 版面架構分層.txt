@@ -1,0 +1,13 @@
+/Views/Shared/_Layout.cshtml
+版面配置頁
+主要這層是放共用外層
+通常會有<head>...
+也會放一些常用的bootstrap javascript
+
+
+Indel.cshtml
+檢視畫面
+
+_PartialView.cshtml
+部分檢視
+//類似相簿頁面

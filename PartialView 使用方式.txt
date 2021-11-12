@@ -1,0 +1,45 @@
+主要是重複的View可以拉出來 放在各個不同的View上    
+
+主要View加上
+    <!-- ***************************************************** -->
+    <!-- 部分檢視，畫面為 _IndexPage.cshtml 檔案。 -->
+    @Html.Action("_IndexPage", "PartialView")
+    <!--               PartialView動作,  控制器名稱 -->
+    <!-- ***************************************************** -->
+
+
+
+
+
+
+[ChildActionOnly] // 使用者不能直接透過瀏覽器預覽  This attribute means the action "cannot" be accessed from the brower's address bar
+        //****************
+        public ActionResult _IndexPage(int _ID = 1)
+        {
+            // id變數，目前位於第幾頁？
+            // PageSize變數，每一頁，要展示幾筆記錄？            
+            int PageSize = 3;
+
+            // NowPageCount，目前正在觀賞這一頁的紀錄
+            int NowPageCount = 0;
+            if (_ID > 0)
+            {
+                NowPageCount = (_ID - 1) * PageSize;    // PageSize，每頁展示3筆紀錄（上面設定過了）
+            }
+
+            // 這段指令的 .Skip()與 . Take()，其實跟T-SQL指令的 offset...fetch....很類似（SQL 2012起可用）
+            var ListAll = (from _userTable in _db.UserTables
+                           orderby _userTable.UserId   // 若寫 descending ，則是反排序（由大到小）
+                           select _userTable).Skip(NowPageCount).Take(PageSize);    // .Skip() 從哪裡開始（忽略前面幾筆記錄）。 .Take()呈現幾筆記錄
+
+            if (ListAll == null)
+            {   // 找不到任何記錄
+                return HttpNotFound();
+            }
+            else
+            {
+                //************************************
+                return PartialView(ListAll.ToList());
+                //************************************
+            }
+        }

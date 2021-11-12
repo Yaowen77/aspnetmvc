@@ -1,0 +1,8 @@
+using System.Web.Mvc;
+
+
+ [AllowHtml]
+  public string MyName { get; set; }
+
+控制器要加入
+ [ValidateInput(false)]

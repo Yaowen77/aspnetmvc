@@ -1,0 +1,55 @@
+        [UIHint("RadioButtonList")]
+        // 請搭配 /Views/Shared/EditorTemplates目錄下的 RadioButtonList.cshtml樣版
+        // 簡單規則 -- /Views/Shared/EditorTemplates/外觀UI.cshtml.
+        public int? MySex { get; set; }           // 呈現單選的 RadioButtonlList
+
+
+------------------------------------------------------------------------------------------------------------
+
+RadioButtonList.cshtml樣版
+
+@model int?
+@*  // 針對 /ModelsUI目錄下的 TestUI類別檔。如果設定為 int? 資料型態，就採用本樣版！
+    // 搭配 PartialViewController 控制器 *@
+
+@*  // 畫面預設值，請全數刪除，這一頁要自己動手做！！
+    // 資料來源  https://www.growingwiththeweb.com/2012/12/aspnet-mvc-display-and-editor-templates.html  *@
+
+
+@{
+    var list = (List<SelectListItem>)ViewData["List"];
+    // 從 View傳來「子選項」
+}
+
+
+@foreach (var item in list)
+{
+    var radioId = ViewData.TemplateInfo.GetFullHtmlFieldId(item.Value);
+    var checkedClass = (item.Value == Model.ToString() ? "checked" : string.Empty);
+
+    <input type="radio" id="@radioId"
+           name="@ViewData.TemplateInfo.HtmlFieldPrefix"
+           value="@item.Value"
+           checked="@checkedClass" />
+
+    <label for="@radioId">@item.Text</label>
+    <br />
+}
+-----------------------------------------------------------------------------------------------------------------------
+
+           @{
+                        // In a real system we would get this list from the database
+                        List<SelectListItem> list = new List<SelectListItem>();
+                        list.Add(new SelectListItem() { Text = "男", Value = "0" });
+                        list.Add(new SelectListItem() { Text = "女", Value = "1" });
+                        list.Add(new SelectListItem() { Text = "不告訴你？？", Value = "2" });
+                    }
+
+                    <!-- 方法一：                                               ****************   -->
+                    @Html.EditorFor(model => model.MySex, new { List = list })
+-------
+https://www.growingwiththeweb.com/2012/12/aspnet-mvc-display-and-editor-templates.html
+
+
+
+

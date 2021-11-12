@@ -1,0 +1,17 @@
+IncompleteActon Action 沒有執行完成
+
+  public ActionResult IncompleteAction()
+        {
+            throw new NotImplementedException("This Action is not yet complete");
+           //可記錄Log檔
+        }
+
+
+override HandleUnknowAction 輸入錯誤或不存在動作 (網址輸入錯誤Action )
+        // 如果找不到動作（Action）或是輸入錯誤的動作名稱，一律跳回首頁
+        // HandleUnknownAction方法標示為 virtual，所以可以用override覆寫。https://msdn.microsoft.com/zh-tw/library/dd492730(v=vs.118).aspx
+        protected override void HandleUnknownAction(string actionName)
+        {
+            Response.Redirect("http://公司首頁(網址)/");
+            base.HandleUnknownAction(actionName);
+        }

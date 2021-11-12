@@ -1,0 +1,63 @@
+  public ActionResult GoogleChart_Pie2_ViewData()
+        {
+            ViewData["RawData"] = @"[
+                ['Task', 'Hours per Day'],
+                ['Work', 11],
+                ['Eat', 2],
+                ['Commute', 2],
+                ['Watch TV', 2],
+                ['Sleep', 7]
+            ]";
+
+            return View();   // 空白畫面（不需 jQuery）
+
+        }
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GoogleChart_Pie</title>
+
+    <!-- *********************************************(start)   -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(
+                @Html.Raw(ViewData["RawData"].ToString())
+            );
+
+            var options = {
+                title: 'My Daily Activities（中文標題）',
+                is3D: true,          // 3D效果
+                // pieHole: 0.4        // 甜甜圈效果（中央挖洞），不能跟 3D共用
+                pieStartAngle: 45,  // 啟始角度
+            };
+                                                                             //                                  *********
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+    <!-- *********************************************(end)   -->
+
+</head>
+<body>
+    <div>
+        https://developers.google.com/chart/interactive/docs/gallery/piechart
+        <br /><br />
+
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    </div>
+</body>
+</html>

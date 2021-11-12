@@ -1,0 +1,10 @@
+預設版面設定值
+
+
+如果沒填 Layout =.....
+@{
+    ViewBag.Title = "Index_Layout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+系統自動默認找_ViewStart

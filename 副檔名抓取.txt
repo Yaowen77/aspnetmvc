@@ -1,0 +1,20 @@
+  if ((fileExtension != ".doc") || (fileExtension != ".xls"))
+                        str = "只有 .doc或是 .xls副檔名，方能上傳。";
+
+
+EndsWith 可以直接抓到尾端
+
+   if (!_FileName.EndsWith(".doc") || !_FileName.EndsWith(".xls"))
+                        str = "只有 .doc或是 .xls副檔名，方能上傳。";
+
+
+ string fileExtension = System.IO.Path.GetExtension(_FileName);  // 需搭配 System.IO命名空間
+                    //-- 資料來源：http://msdn.microsoft.com/zh-tw/library/ms227669%28v=vs.80%29.aspx
+                    //-- 註解：用「字串陣列」來存放允許上傳的副檔名。
+                    string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+
+                    for (int i = 0; i < allowedExtensions.Length; i++)
+                    {
+                        if (allowedExtensions[i] == fileExtension)
+                            fileOK = true;
+                    }    //-- 延伸範例，請看 「密碼強度」 http://www.dotblogs.com.tw/mis2000lab/archive/2012/07/12/password_strength_textbox_autopostback.aspx

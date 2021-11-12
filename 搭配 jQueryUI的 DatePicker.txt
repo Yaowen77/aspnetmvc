@@ -1,0 +1,35 @@
+@model DateTime?
+@*  // 針對 /ModelsUI目錄下的 TestUI類別檔。第二個 MyBirthDay2 設定為 DateTime? 資料型態，就採用本樣版！
+    // 搭配 PartialViewController 控制器 *@
+
+@*  // 畫面預設值，請全數刪除，這一頁要自己動手做！！ *@
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@*                           *********  參考這一篇，但他寫成 @class 而非 id = "datepicker" -- https://ithelp.ithome.com.tw/articles/10161794  *@
+@Html.TextBoxFor(m => m, new { id = "datepicker" })
+@*                       **********
+    (1) 需要搭配檢視畫面上的 EditorFor，所以這裡寫成 m=>m
+    (2) 搭配 jQueryUI的 DatePicker，所以要寫成 id="datepicker"  *@
+
+<script>
+    ////方法一，基本款。// 參考資料  https://jqueryui.com/datepicker/
+    //$('.datepicker').datepicker();
+
+
+    ////方法二，台灣日曆（正體中文）。// 參考資料  https://jqueryui.com/datepicker/#localization
+    $(function () {
+        $("#datepicker").datepicker($.datepicker.regional["zh-TW"]);   // 台灣日曆（日期格式）。需搭配下方的JS (datepicker-zh-TW.js)。
+    });
+</script>
+<script src="https://jqueryui.com/resources/demos/datepicker/i18n/datepicker-zh-TW.js"></script>
+<!-- 台灣的日曆（日期格式） -->
+-----------------------------------------------------------------------------------------------------------------------
+
+ @Html.EditorFor(model => model.MyBirthDay2, "jQueryUIDatePicker")
+--------------------------------------------
+public DateTime? MyBirthDay2 { get; set; }

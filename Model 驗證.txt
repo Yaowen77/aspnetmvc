@@ -5,3 +5,10 @@
         [Display(Name = "名稱(UserName，必填)")]
         [Required(ErrorMessage = "*** 自訂訊息 *** 必填欄位 ***")]     // 必填欄位
         public string UserName { get; set; }
+
+
+
+//Description.   多列文字
+ [DataType(DataType.MultilineText)]
+//隱藏
+  [HiddenInput(DisplayValue = false)]

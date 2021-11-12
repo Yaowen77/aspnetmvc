@@ -1,0 +1,21 @@
+     name: "PhotoRoute",
+                url: "photo/{id}",      // 您可以用兩種方法看到一張照片。 /Photo/1 或是 /Photo/Details/1
+                defaults: new { controller = "Photo", action = "Details" },
+                constraints: new { id = "[0-9]+" }
+            );
+
+            //This route means we can access comments like this: /comment/3
+            routes.MapRoute(
+                name: "CommentRoute",
+                url: "comment/{id}",
+                defaults: new { controller = "Comment", action = "Details" },
+                constraints: new { id = "[0-9]+" }
+            );
+
+            //This is the default route  預設值，首頁是 /Home/Index
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }

@@ -1,0 +1,365 @@
+HttpPostedFileBase 類別
+
+ContentLength 
+取得檔案上傳的檔案大小(以位元組為單位)
+
+ContentType
+取得鎖上傳檔案的MIME內容類型
+
+FileName 
+上傳檔名(不含Client端的目錄、路徑)  --取得用戶端上傳檔案的完整格式名稱
+
+InputStream
+取得Stream 物件 (二進為內容)，該物件指向所上傳的檔案，以準備讀取該檔案的內容
+
+
+.SaveAs(String) 方法
+儲存所上傳的檔案的內容 
+
+Path.Combine
+Path.Combine(_path, _FileName);
+可以自己路徑+檔案自己組字串 可以避免忘記加入\的問題
+
+上傳檔名命名方式
+1.主檔名+流水號
+
+2.GUID
+Guid.NewGuid().ToString("N") + ExtFilename;  575432c780df45b6a1adf4c222d73351.jpg
+
+3.年月日時分秒+毫秒(千分之一)
+20181231235959000.jpg
+  _FileName = DateTime.Now.ToString("yyyyMMddhhmmssfff") + ExtFilename;
+
+ //--網站上的 URL路徑。 Server.MapPath() 轉換成Web Server電腦上的硬碟「實體」目錄。
+ string _path = Server.MapPath("~/Images/");  // 別忘記目錄後面的「斜線」  // 上傳到網站的 /Images目錄底下
+
+ 以下的 URL路徑，請依照實際狀況，進行修改。否則程式會報錯！
+ string appPath = Request.PhysicalApplicationPath;
+
+
+View 須要加入 new { enctype = "multipart/form-data" 
+    @using (Html.BeginForm("Create", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+  }
+
+                    <i>因為 FileUpload_DB只存放「上傳檔名（字串）」，所以這裡需要手動改成 "檔案上傳"的表單元件 type="file"</i><br />
+                    <input type="file" id="FileUpload_FileName" name="FileUpload_FileName" />
+
+<!-- 或是寫成 -->
+                    @*  @Html.TextBox("FileUpload_FileName", "", new { type = "file" })
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Create(HttpPostedFileBase FileUpload_FileName)
+        {   //                                    ************************** 重點！！需搭配檢視畫面 FileUpload元件的「Name屬性」一字不差。
+            // HttpPostedFileBase 務必搭配下面的最後一句話！
+            //     檢視畫面的表單。
+            //     @using (Html.BeginForm("動作", "控制器", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+            // https://msdn.microsoft.com/zh-tw/library/system.web.httppostedfilebase(v=vs.110).aspx
+
+            if (!ModelState.IsValid) return View();
+
+            //=== (1) 基本款（標準寫法）======================================
+            #region            
+            try
+            {
+                if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+                {
+                    string _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+
+                    string _path = "d:\\temp\\uploads\\";      // 或是寫成  string _path = @"d:\temp\uploads\";
+
+                    // 透過 Path.Combine()處理目錄與路徑最後的「斜線」問題  
+                    string _end = Path.Combine(_path, _FileName);
+
+                    FileUpload_FileName.SaveAs(_end);   // 上傳完畢，並且把檔案存放在 /Images目錄底下
+                    // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+                    ViewBag.Message = "上傳成功。完整路徑與檔名：" + _end;
+                }
+                else
+                    ViewBag.Message = "您尚未挑選檔案，無法上傳";
+            }
+            catch
+            {
+                ViewBag.Message = "上傳失敗。File upload failed!!";
+            }
+            return View();
+            #endregion
+
+
+
+
+            //=== (2) 上傳的路徑與目錄（三種寫法）===============================
+            #region     
+            //try
+            //{
+            //    if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+            //    {
+            //        // 基本款的寫法
+            //        string _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+
+            //        //*********************************************************************(start)
+            //        //*** 方法一 *****
+            //        //-- 註解：先設定好檔案上傳的路徑，這是Web Server電腦上的硬碟「實體」目錄。
+            //        //       C#語法在撰寫磁碟的目錄位置時，請留意以下的寫法：
+            //        //string _path = "d:\\temp\\uploads\\";
+            //        // 或是寫成  string _path = @"d:\temp\uploads\";
+
+            //        //*** 方法二 *****
+            //        //--網站上的 URL路徑。 Server.MapPath() 轉換成Web Server電腦上的硬碟「實體」目錄。
+            //        //string _path = Server.MapPath("~/Images/");  // 別忘記目錄後面的「斜線」  // 上傳到網站的 /Images目錄底下
+
+            //        //*** 方法三 *****
+            //        //--註解：網站上的目錄路徑。所以不寫磁碟名稱（不寫 “實體”路徑）。
+            //        //--以下的 URL路徑，請依照實際狀況，進行修改。否則程式會報錯！
+            //        string appPath = Request.PhysicalApplicationPath;
+            //        //-- appPath是網站 "根"目錄「轉換成」Server端硬碟路徑。
+            //        //-- appPath會列出網站（專案）的目錄路徑。例如： C:\Users\xxx\Documents\Visual Studio 201x\Projects\專案網站名稱  
+            //        //-- 下面的範例會展示 Request的各種路徑寫法
+            //        string saveDir = "Images\\";         // 或是寫成string saveDir = @"Images\";
+            //        //-- 路徑的一開始「不可」寫「\\」，否則存檔時，會出現兩個 「\\」符號
+            //        string _path = Path.Combine(appPath, saveDir);
+            //        //*********************************************************************(end)
+
+            //        // 透過 Path.Combine()處理目錄與路徑 "最後" 的「斜線」問題  
+            //        string _end = Path.Combine(_path, _FileName);   // Web Server的硬碟「路徑（目錄）」加上「上傳檔名」。
+            //        FileUpload_FileName.SaveAs(_end);   // 上傳完畢，並且把檔案存放在 /Images目錄底下
+            //        // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+            //        ViewBag.Message = "上傳成功。檔名：" + _FileName;
+            //    }
+            //    else
+            //        ViewBag.Message = "您尚未挑選檔案，無法上傳";
+            //}
+            //catch
+            //{
+            //    ViewBag.Message = "上傳失敗。File upload failed!!";
+            //}
+            //return View();
+            #endregion
+
+            //=== (3) Request 路徑與目錄 ======================================
+            #region
+            //string str = "<h3>Request 路徑與目錄 </h3>";
+            //// 資料來源：https://dotblogs.com.tw/atowngit/archive/2009/08/23/10198.aspx 
+            ////**********************************************************************************
+
+            ////傳回傳遞給方法之虛擬路徑的完整實體路徑
+            ////傳遞給 MapPath 方法的路徑必須是應用程式的相對路徑，而不是絕對路徑。
+            //str += "Server.MapPath(\"~\") 「根」路徑 :<font color=blue> " + Server.MapPath("~") + "</font><br />";
+
+            ////抓取 ASP.NET 網頁程式，所在的目錄
+            //str += "Server.MapPath(\".\") :<font color=blue> " + Server.MapPath(".") + "</font><br /><br /><br />";
+
+            ////**********************************************************************************
+            ////取得 asp.net 應用程式在伺服器上虛擬應用程式 "根"路徑
+            //str += "Request.ApplicationPath（虛擬應用程式「根」路徑） :<font color=red> " + Request.ApplicationPath + "</font><br /><br><br>";
+
+            ////取得目前要求的虛擬路徑
+            //str += "Request.CurrentExecutionFilePath（包含檔名） : <font color=red>" + Request.CurrentExecutionFilePath + "</font><br />";
+
+            ////取得目前要求的虛擬路徑，與 CurrentExecutionFilePath 屬性不同，FilePath 並不會反映伺服器端的傳輸。
+            //str += "Request.FilePath（包含檔名） :<font color=red> " + Request.FilePath + "</font><br />";
+
+            ////取得目前要求的虛擬路徑
+            //str += "Request.Path（包含檔名） : <font color=red>" + Request.Path + "</font><br /><br /><br />";
+
+            ////**********************************************************************************
+            ////取得目前執行應用程式之根目錄的實體檔案系統路徑
+            //str += "Request.PhysicalApplicationPath : <font color=red>" + Request.PhysicalApplicationPath + "</font><br /><br><br>";
+
+            ////取得與要求的 URL 對應之實體檔案系統路徑
+            //str += "Request.PhysicalPath （包含檔名）:<font color=red> " + Request.PhysicalPath + "</font><br />";
+
+            //return Content(str);    // 「大量」且「內容變動大」的文字相連，可以改用 System.Text.StringBuilder來做
+            #endregion
+        }
+
+
+    //==============================================================
+        public ActionResult Create_ReName2()   // （流水號放在檔名後面）
+        {   // 檢視畫面，為了「檔案上傳」，有些地方要自己動手修改
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Create_ReName2(HttpPostedFileBase FileUpload_FileName)
+        {   //                                                    ************************** 重點！！需搭配檢視畫面 FileUpload元件的「Name屬性」一字不差。
+            // HttpPostedFileBase 務必搭配下面的最後一句話！
+            //     檢視畫面的表單。
+            //     @using (Html.BeginForm("動作", "控制器", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+            // https://msdn.microsoft.com/zh-tw/library/system.web.httppostedfilebase(v=vs.110).aspx
+            if (!ModelState.IsValid) return View();
+
+            //=== (1) 基本款（標準寫法）======================================
+            #region            
+            string str = "";
+            try
+            {
+                if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+                {
+                    string _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+                    //-- User上傳的完整檔名（不包含 Client端的路徑！）
+                    // 想抓到「主檔名」，請寫成 Path.GetFileNameWithoutExtension(檔名);
+                    // 想抓到「副檔名」，請寫成 Path.GetExtension(檔名);
+
+                    string _savePath = Server.MapPath("~/Images/");   // 別忘記目錄後面的「斜線」，不然就用 Path.Combine()處理
+
+                    //==================================================(Start)
+                    // 透過 Path.Combine()處理目錄與路徑最後的「斜線」問題
+                    string pathToCheck = Path.Combine(_savePath, _FileName);   // --新的路徑與檔名，透過迴圈繼續檢查檔名是否有重複？
+
+                    if (System.IO.File.Exists(pathToCheck))
+                    {
+                        int my_counter = 2;
+                        string OnlyFileName = Path.GetFileNameWithoutExtension(_FileName);  // 註解：擷取上傳檔案的「主檔名」。
+                        string fileExtension = Path.GetExtension(_FileName);   // 註解：擷取上傳檔案的「.副檔名」。    
+
+                        while (System.IO.File.Exists(pathToCheck))
+                        {   //*************************************************************************************
+                            // 路徑與檔名都相同的話，目前上傳的檔名（改成 tempfileName），後面會用數字來代替。
+                            _FileName = OnlyFileName + "_" + my_counter.ToString() + fileExtension;
+                            //-- 完成後的新檔案名稱：   正檔名_數字.副檔名  (fileExtension會提供  ".副檔名" )
+                            //*************************************************************************************
+
+                            pathToCheck = Path.Combine(_savePath, _FileName);   // --路徑 與 新檔名，透過迴圈繼續檢查檔名是否重複？
+                            my_counter++;
+                        }
+                        str = "抱歉，您上傳的檔名發生衝突，檔名修改為 " + _FileName;
+                    }
+
+                    //==================================================(End)
+                    string _end = Path.Combine(_savePath, _FileName);
+                    FileUpload_FileName.SaveAs(_end);   // 上傳完畢
+                    // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+                    str += "<br /> ** 上傳成功。" + _end;
+                }
+                else
+                    str = "您尚未挑選檔案，無法上傳";
+            }
+            catch
+            {
+                str = "上傳失敗。File upload failed!!";
+            }
+            return Content(str);
+            //return View();
+            #endregion
+        }
+
+
+
+        //==============================================================
+        public ActionResult Create_ReName3_GUID()   // （流水號 GUID，例如 575432c780df45b6a1adf4c222d73351.jpg）
+        {   // 檢視畫面，為了「檔案上傳」，有些地方要自己動手修改
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Create_ReName3_GUID(HttpPostedFileBase FileUpload_FileName)
+        {   //                                                    ************************** 重點！！需搭配檢視畫面 FileUpload元件的「Name屬性」一字不差。
+            // HttpPostedFileBase 務必搭配下面的最後一句話！
+            //     檢視畫面的表單。
+            //     @using (Html.BeginForm("動作", "控制器", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+            // https://msdn.microsoft.com/zh-tw/library/system.web.httppostedfilebase(v=vs.110).aspx
+
+            if (!ModelState.IsValid) return View();
+            //=== (1) 基本款（標準寫法）======================================
+            #region            
+            string str = "";
+            try
+            {
+                if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+                {
+                    string _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+                    //-- User上傳的完整檔名（不包含 Client端的路徑！）
+                    // 想抓到「主檔名」，請寫成 Path.GetFileNameWithoutExtension(完整檔名);
+                    // 想抓到「副檔名」，請寫成 Path.GetExtension(完整檔名);
+
+                    string _savePath = Server.MapPath("~/Images/");   // 別忘記目錄後面的「斜線」，不然就用 Path.Combine()處理
+
+                    //==================================================(Start)
+                    string ExtFilename = Path.GetExtension(_FileName);  // 副檔名。
+
+                    _FileName = Guid.NewGuid().ToString("N") + ExtFilename;
+                    //                      // ******************************* //-- 主檔名通通改成Guid 產生的字串！副檔名照舊。
+                    //==================================================(End)
+                    string _end = Path.Combine(_savePath, _FileName);
+                    FileUpload_FileName.SaveAs(_end);   // 上傳完畢
+                    // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+                    str += "<br /> ** 上傳成功。" + _end;
+                }
+                else
+                    str = "您尚未挑選檔案，無法上傳";
+            }
+            catch
+            {
+                str = "上傳失敗。File upload failed!!";
+            }
+            return Content(str);
+            //return View();
+            #endregion
+        }
+
+
+        //==============================================================
+        public ActionResult Create_ReName4_DateTime()   // （年月日時分秒+毫秒，例如：2018123121059001.jpg）
+        {   // 檢視畫面，為了「檔案上傳」，有些地方要自己動手修改
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Create_ReName4_DateTime(HttpPostedFileBase FileUpload_FileName)
+        {   //                                                    ************************** 重點！！需搭配檢視畫面 FileUpload元件的「Name屬性」一字不差。
+            // HttpPostedFileBase 務必搭配下面的最後一句話！
+            //     檢視畫面的表單。
+            //     @using (Html.BeginForm("動作", "控制器", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+            // https://msdn.microsoft.com/zh-tw/library/system.web.httppostedfilebase(v=vs.110).aspx
+
+            if (!ModelState.IsValid) return View();
+            //=== (1) 基本款（標準寫法）======================================
+            #region            
+            string str = "";
+            try
+            {
+                if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+                {
+                    string _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+                    //-- User上傳的完整檔名（不包含 Client端的路徑！）
+                    // 想抓到「主檔名」，請寫成 Path.GetFileNameWithoutExtension(完整檔名);
+                    // 想抓到「副檔名」，請寫成 Path.GetExtension(完整檔名);
+
+                    string _savePath = Server.MapPath("~/Images/");   // 別忘記目錄後面的「斜線」，不然就用 Path.Combine()處理
+
+                    //==================================================(Start)
+                    string ExtFilename = Path.GetExtension(_FileName);  // 副檔名。
+
+                    _FileName = DateTime.Now.ToString("yyyyMMddhhmmssfff") + ExtFilename;
+                    // 錯誤寫法：string fileName = String.Format("{0:yyyyMMddhhmmssffftt}", DateTime.Now.ToString()) + ExtFilename;
+                    //-- 不管你上傳什麼，主檔名通通改成 "年月日時分秒+毫秒"產生的字串！副檔名照舊。
+                    //-- 最後 fff表示毫秒。tt表示AM、PM（上下午）。
+                    //==================================================(End)
+                    string _end = Path.Combine(_savePath, _FileName);
+                    FileUpload_FileName.SaveAs(_end);   // 上傳完畢
+                    // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+                    str += "<br /> ** 上傳成功。" + _end;
+                }
+                else
+                    str = "您尚未挑選檔案，無法上傳";
+            }
+            catch
+            {
+                str = "上傳失敗。File upload failed!!";
+            }
+            return Content(str);
+            //return View();
+            #endregion
+        }
+

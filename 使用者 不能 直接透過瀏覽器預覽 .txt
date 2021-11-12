@@ -1,0 +1,4 @@
+      [ChildActionOnly] // 使用者 "不能" 直接透過瀏覽器預覽  // This attribute means the action "cannot" be accessed from the brower's address bar
+        public ActionResult _PhotoGallery_Old(int number = 0)
+        {
+}
