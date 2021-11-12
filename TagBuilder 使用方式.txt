@@ -1,0 +1,28 @@
+          TagBuilder tb = new TagBuilder("select");
+
+            string tagName = "UserId";
+            tb.GenerateId(tagName);   // 產生HTML標籤的 id。例如 <select id="..."  name="...">
+            tb.MergeAttribute("name", tagName);  // 產生HTML標籤的 name
+            //**************************************
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();   // 需要 System.Text命名空間
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                int i = Convert.ToInt32(id);
+                var result = _db.UserTable2s.Where(u => u.DepartmentId == i);
+
+                // 注意！如果後面不加上 .AsEnumerable()，就會報錯！
+                // 錯誤訊息 - LINQ to Entities 無法辨識方法 'Int32 Parse(System.String)' 方法，而且這個方法無法轉譯成存放區運算式。
+                foreach (var r in result.AsEnumerable())
+                {   //                           *******************
+                    // 組合字串，此結果將都丟往檢視畫面上，做下拉式選單的「子選項」
+                    sb.AppendFormat("<option value=\"{0}\">{1}</option>",
+                                   r.DepartmentId.ToString(),
+                                   r.UserName);
+                }
+                tb.InnerHtml = sb.ToString();
+                // ***********
+                // 參考資料 https://msdn.microsoft.com/zh-tw/library/system.web.mvc.tagbuilder.innerhtml(v=vs.111).aspx
+                // 若要在將 InnerHtml 屬性設定為字串之前，先對該字串進行「HTML編碼」，請改用 SetInnerText(String) 方法。
+            }
+            return Content(tb.ToString());    // 傳回一段字串。完整的「完整的」下拉式選單 <select>包含裡面各種<option>子選項

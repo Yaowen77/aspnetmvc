@@ -1,9 +1,10 @@
+前言:目前是學windows application，都進入雲端時代了，也想來學點Web 程式 這30天會紀錄我自己所學的，將我覺得必要的知識記錄下來。
+
+
 以下是以ASP.NET MVC 基本介紹 + 學習資源 + 需要學會什麼樣的語言 但不會著重在View的部分
 
 
-目標職缺:ASP.NET MVC 網頁工程師
-
-基本需要學習技術如下(以下都是我自己念過的...)
+基本需要學習技術如下
 
 基礎語言:C#(Model、Controller) (目前出到C#9.0)
 
@@ -74,7 +75,7 @@ MVC:https://dog0416.blogspot.com/search/label/%E3%80%8CASP%20.Net%20MVC%20%E5%9F
 付費教學網頁
 https://9vs1.com/course-introduction-ASP-NET-basic-MIS2000Lab(強烈推薦這個系列)
 
-註解:書籍跟著實務學習是參照微軟範例的有註解版本，新手建議買書先看這本 或者直接看付費教學網頁比較快...
+註解:書籍跟著實務學習是參照微軟範例的有註解版本，個人建議買書先看這本 或者直接看付費教學網頁比較快...
 
 開發環境
 
@@ -99,3 +100,8 @@ ASP.NET MVC 是一種網頁框架(Framework) 基礎語言還是要先學會....才會比較好搞懂
 
 個人建議學習方式會是 影音課程>書本>網路零碎範例
 
+後續講解內容
+
+ASP.NET Web版本為:ASP.Net MVC5  Framework4.7.2
+
+ASP.NET Web api版本為:ASP.Net MVC Core 3.1

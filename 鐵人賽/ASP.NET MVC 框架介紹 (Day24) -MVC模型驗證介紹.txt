@@ -1,0 +1,139 @@
+接下來講講 Model 驗證規則部分...
+
+在 模型類別上方需加入
+using System.ComponentModel.DataAnnotations;
+
+內建驗證屬性如下
+
+[ValidateNever]： ValidateNeverAttribute 指出屬性或參數應該從驗證中排除。
+[CreditCard]：驗證屬性是否具有信用卡格式。 需要 JQuery 驗證的其他方法。
+[Compare]：驗證模型中的兩個屬性是否相符。
+[EmailAddress]：驗證屬性具有電子郵件格式。
+[Phone]：驗證屬性具有電話號碼格式。
+[Range]：驗證屬性值是否落在指定的範圍內。
+[RegularExpression]：驗證屬性值是否符合指定的正則運算式。
+[Required]：驗證欄位不是 null。 如需此屬性行為的詳細資訊，請參閱 [Required] 屬性。
+[StringLength]：驗證字串屬性值不超過指定的長度限制。
+[Url]：驗證屬性是否具有 URL 格式。
+[Remote]：在伺服器上呼叫動作方法，以驗證用戶端上的輸入。 如需此屬性行為的詳細資訊，請參閱 [Remote] 屬性。
+
+ 
+類別Model
+
+public class Category
+{
+
+        [Required]
+        [Display(Name = "類別編號")]
+        [StringLength(4, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]
+        public string CategoryID { get; set; }
+
+        [Display(Name = "類別名稱")]
+        [StringLength(20, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]
+}
+
+類別Controller
+
+      [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Category postback)
+        {
+            try
+            {
+                if (this.ModelState.IsValid)
+                {
+                    if (!new Category().IsCategoryidExist(postback.CategoryID))
+                    {
+                        ViewBag.ResultMessage = "類別編號已存在";
+  
+                        return View(postback);
+                    }
+                    else
+                    {
+                        var result = new Category().Post_Category(postback, Type, (string)Session["UserID"]);
+                        if (result)
+                        {
+                            TempData["ResultMessage"] = String.Format("類別[{0}]成功新增", postback.CategoryID);
+                            return RedirectToAction("Index", "Category");
+                        }
+                        else
+                        {
+                            ViewBag.ResultMessage = "資料有誤，請檢查";
+                            return View(postback);
+                        }
+                    }
+
+                }
+                else
+                {
+                    ViewBag.ResultMessage = "資料有誤，請檢查";
+                    return View(postback);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ResultMessage = e.ToString();
+                return View();
+            }
+        }
+
+註解:this.ModelState.IsValid 就會進入類別Model 的驗證判斷
+
+
+類別View
+
+@model WebApplication1.Models.Category.Category
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Category", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h2>類別資料新增作業</h2>
+        <hr />
+
+        @if (ViewBag.ResultMessage != null)//判斷如果有訊息，則顯示。
+        {           
+            <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(ViewBag.ResultMessage));
+            alert(message);
+            </script>
+        }
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="存檔" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回清單", "Index")
+</div>
+
+
+註解: @Html.ValidationMessageFor 則會顯示類別Model的ErrorMessage 訊息

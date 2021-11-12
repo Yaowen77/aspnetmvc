@@ -1,0 +1,134 @@
+接下來講講Controller 部分...
+
+首先啟始路由在 方案總管-> App_Start資料夾底下的RouteConfig
+
+  public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }
+    }
+
+defaults裡面的controller對應著方案總管-> Controller資料夾底下的HomeController.cs檔裡的Index action(ActionResult) 為啟始路由
+
+
+ public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();//跑到這段的時候會跳到顯示畫面 在方案總管-> View資料夾底下->Home資料夾->Index.cshtml
+        }
+   }
+
+註解:或者可在程式Index()上方按下右鍵點選移置檢視
+
+如果自己的啟始路由不是HomeController 想要改成LoginController也可以改成
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+            );
+
+        }
+
+一開始系統開啟網頁的路徑為啟始路由->找到對應的Controller->找到對應的Action->在從Action裡面的View轉到檢視畫面
+
+
+ActionResult 預設為回傳View() 顯示畫面，如果不想要回傳顯示畫面還有以下幾個方法
+
+  //回傳字串
+   public string Index()
+        {
+            return "aa";
+        }
+
+//導入其他網站
+public ActionResult Index()
+        {  
+            return Redirect("http://www.yahoo.com.tw/");   
+        }
+
+//導入其他控制器+動作
+public ActionResult Index()
+    {  
+          
+ return RedirectToAction("Index", "Home");
+ }
+
+
+//回傳文字     
+public ContentResult Index()
+        {
+            return Content("aa"); 
+        }
+
+以下整理到下方
+
+繼承類別	           Controller   
+ContentResult	           Content()	回傳文字
+ViewResult	           View()	回傳HTML
+FileResult	           File()	輸出檔案
+HttpNotFoundResult	   HttpNotFound()	回應HTTP狀態碼(404)
+JsonResult	           Json()	        輸出Json
+PartialViewResult	   PartialView()	部分HTML
+RedirectResult	           Redirect();RedirectPermanent()	重新導向URL
+RedirectToRouteResult	   RedirectToAction()轉網址址 or 轉Action
+
+後續說明會以ActionResult為主....
+
+講到這裡會有人想知道如何將資料丟到View()上，以下提供幾種作法
+
+
+1.ViewBag 、ViewData
+
+ex:
+
+        public ActionResult Index()
+        {
+            ViewBag.Test = "test";
+            ViewData["A"] = "A";
+            return View();
+        }
+
+2. 建立Class 將資料丟過去
+
+    public class Class1
+    {
+        public string test { get; set; }
+    }
+
+    public ActionResult Index()
+        {
+            var test = new Models.Class1 { test = "aa" };//var 資料型態為Models.Class1
+            return View(test);
+        }
+
+3. Class 搭配 List 將資料丟過去
+
+     public ActionResult Index()
+
+            List<Models.Class1> testList = new List<Models.Class1>
+            {
+                new Models.Class1 { test = "aa" },
+                new Models.Class1 {test = "bb" },
+                new Models.Class1 { test = "cc" },
+                new Models.Class1 { test = "dd" }
+            };
+
+            return View(testList);//請注意 List 的資料型態為IEnumerable
+        }
+
+後續會講到丟過去View之後結果呈現會怎樣....
+

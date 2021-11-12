@@ -1,0 +1,212 @@
+接下來講講新增 部分...
+
+
+Controller
+
+public ActionResult Create()
+{
+ return View();
+}
+
+1.主畫面View按下按鈕導向Controller Create Action
+
+
+Model
+
+public class Category
+    {
+
+        [Display(Name = "類別種類")]
+        public int CateType { get; set; }
+
+        [Required]
+        [Display(Name = "類別編號")]
+        [StringLength(4, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]
+        public string CategoryID { get; set; }
+
+        [Display(Name = "類別名稱")]
+        [StringLength(20, ErrorMessage = "{0}的長度至少必須為{2}的字元。", MinimumLength = 1)]
+        public string CategoryName { get; set; }
+
+        public Category()
+        {
+
+        }
+
+        public bool IsCategoryidExist(string categoryid)
+        {
+
+            string connectionString = Server=127.0.0.1;userid=root; password=11111111; database=test;
+
+
+            using (var conn = new MySqlConnection(connectionString))
+            {
+
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "SELECT Category  FROM Category WHERE Category = @Category ";
+                    command.Parameters.AddWithValue("@Category", categoryid);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public bool Post_Category(Category category,int type, string InputUserID)
+        {
+            
+string connectionString = Server=127.0.0.1;userid=root; password=11111111; database=test;
+            
+var result = false;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "Insert Into Category (Category,Category_Name,ModifyDate,ModifyEID) VALUES(@Category,@Category_Name,Now(),@InputUser)";
+                    command.Parameters.AddWithValue("@Category", category.CategoryID);
+                    command.Parameters.AddWithValue("@Category_Name", category.CategoryName);
+                    command.Parameters.AddWithValue("@InputUser", InputUserID);
+                    command.ExecuteNonQuery();
+                    result = true;
+                }
+            }
+            return result;
+        }
+}
+
+1.屬性宣告類別模板
+2.IsCategoryidExist判斷該類別有無存在
+3.Post_Category 寫入類別資料
+
+View
+
+@model WebApplication1.Models.Category.Category
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Category", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h2>類別資料新增作業</h2>
+        <hr />
+
+        @if (ViewBag.ResultMessage != null)//判斷如果有訊息，則顯示。
+        {
+            <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(ViewBag.ResultMessage));
+            alert(message);
+            </script>
+        }
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="存檔" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回清單", "Index")
+</div>
+
+1.@using (Html.BeginForm) 表單送出Razor語法 分別為 Create(Action) Category(Controller) FormMethod.Post(送出方法)
+2.@Html.AntiForgeryToken() 避免CSRF攻擊 (會產生一組Token給Server去做比對) 送出的Controller  需加上 [ValidateAntiForgeryToken]
+3.@class bootstrap 語法
+4.@Html.ValidationMessageFor 後續會講...
+5.需宣告類別對應模板 @model WebApplication1.Models.Category.Category
+6.如果要上傳檔案 @using (Html.BeginForm("Create", "Category", FormMethod.Post, new { enctype = "multipart/form-data" })) 需要加上new { enctype = "multipart/form-data" }
+
+
+新增表單送出 Controller 
+
+
+ [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Category postback)
+        {
+            try
+            {
+                if (this.ModelState.IsValid)
+                {
+                    if (!new Category().IsCategoryidExist(postback.CategoryID, Type))
+                    {
+                        ViewBag.ResultMessage = "類別編號已存在";
+                        ViewBag.Type = Type;
+                        return View(postback);
+                    }
+                    else
+                    {
+                        var result = new Category().Post_Category(postback, Type, (string)Session["UserID"]);
+                        if (result)
+                        {
+                            TempData["ResultMessage"] = String.Format("類別[{0}]成功新增", postback.CategoryID);
+                            return RedirectToAction("Index", "Category");
+                        }
+                        else
+                        {
+                            ViewBag.ResultMessage = "資料有誤，請檢查";
+                            ViewBag.Type = Type;
+                            return View(postback);
+                        }
+                    }
+
+                }
+                else
+                {
+                    ViewBag.ResultMessage = "資料有誤，請檢查";
+                    ViewBag.Type = Type;
+                    return View(postback);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ResultMessage = e.ToString();
+                return View();
+            }
+        }
+1. [HttpPost] 為View @using (Html.BeginForm) 送出方法
+2. [ValidateAntiForgeryToken] 為View @Html.AntiForgeryToken() 對應的避免CSRF攻擊 的判斷
+3. 參數可放 Category postback 接收表單的資料
+4. 如果要接收檔案參數可加上HttpPostedFileBase file
+
+
+
