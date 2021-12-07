@@ -1,3 +1,4 @@
+
 Newtonsoft.Json (JSON.NET)舊版框架 (MVC 5 通用性最高)
 System.Text.Json 新版框架 (NET Core 3.0 以上)
 Utf8Json(NuGet套件) 編碼
@@ -38,3 +39,23 @@ Jil (NuGet套件) 解碼
             //5.Jil - 第三方的高效能JSON序列化及反序列化套件
             string json5 = Jil.JSON.Serialize(persons);
             var list5 = Jil.JSON.Deserialize<List<Person>>(json5);
+
+
+
+
+
+
+
+//System.Web.Script.Serialization;
+ /// LINQ & JSON。搭配 /Models/UserTable.cs。  缺點：輸出的「日期格式」怪怪的。
+占不推薦這個做法
+     var data = from u in _db.UserTables
+                       select new
+                       {
+                           UserId = u.UserId,
+                           UserName = u.UserName,
+                           UserMobilePhone = u.UserMobilePhone
+                       };
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string result = serializer.Serialize(data);

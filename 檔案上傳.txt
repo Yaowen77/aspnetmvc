@@ -363,3 +363,70 @@ View 須要加入 new { enctype = "multipart/form-data"
             #endregion
         }
 
+
+  public ActionResult Create_DB1()   // 基本款
+        {   // 檢視畫面，為了「檔案上傳」，有些地方要自己動手修改
+            return View();
+        }
+
+        //*** 搭配 /Models_FileUpload/FileUpload_DB.cs  ***
+        [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Create_DB1(FileUpload_DB _DB, HttpPostedFileBase FileUpload_FileName)
+        {   //                                            ******************** 重點！！
+            // HttpPostedFileBase 務必搭配下面的最後一句話！
+            //     檢視畫面的表單。
+            //     @using (Html.BeginForm("動作", "控制器", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+            // https://msdn.microsoft.com/zh-tw/library/system.web.httppostedfilebase(v=vs.110).aspx
+
+            //**********************************************************************
+            //*** (1) 檔案上傳 (FileUpload)     基本款（標準寫法）
+            string strMessage = "";
+            string _FileName = "";
+
+            #region            
+            try
+            {
+                if (FileUpload_FileName.ContentLength > 0)   // 檢查 <input type="file"> 是否輸入檔案？
+                {
+                    _FileName = Path.GetFileName(FileUpload_FileName.FileName);   // 需搭配 System.IO命名空間
+                    string _path = "D:\\work\\C#2000\\p10\\WebApplication1\\WebApplication1\\Images\\";      // 或是寫成  string _path = @"d:\temp\uploads\";
+
+                    // 透過 Path.Combine()處理目錄與路徑最後的「斜線」問題  
+                    string _end = Path.Combine(_path, _FileName);
+                    FileUpload_FileName.SaveAs(_end);   // 上傳完畢，並且把檔案存放在 /Images目錄底下
+                    // 上傳後，檔案存放在Web Server的硬碟裡面，需要「（目錄）路徑」、「檔名」兩大條件！
+
+                    strMessage += "上傳成功，請檢查 (1) FileUpload_DB資料表與 (2)上傳的目錄。<br>完整路徑與檔名：" + _end;
+                }
+                else
+                    strMessage += "您尚未挑選檔案，無法上傳";
+            }
+            catch
+            {
+                strMessage += "上傳失敗。File upload failed!!";
+            }
+            #endregion
+
+            //**********************************************************************
+            //*** (2) 資料新增，寫入資料表（詳見 UserDB控制器的 Create動作） 
+            #region  
+
+            // 注意！！ 存入資料表以後，檔名變成 System.Web.HttpPostedFileWrapper
+            // https://www.codeproject.com/Questions/1180504/Image-name-save-as-system-web-httppostedfilewrappe
+            _DB.FileUpload_FileName = _FileName;
+            // 解決方法 -- 把上傳成功「檔名」寫入 ViewModel類別檔的「FileUpload_FileName屬性」裡面
+            //****************************************
+
+            if ((_DB != null) && (ModelState.IsValid))   // ModelState.IsValid，通過表單驗證（Server-side validation）需搭配 Model底下類別檔的 [驗證]
+            {   // 第一種方法
+                _db.FileUpload_DBs.Add(_DB);
+                _db.SaveChanges();
+
+                strMessage += "<h3>寫入FileUpload_DB資料表</h3>";
+            }
+            #endregion   
+
+            //return View();
+            return Content(strMessage);
+        }

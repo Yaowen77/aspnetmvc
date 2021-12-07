@@ -1,0 +1,31 @@
+  <!-- *** JavaScript ************************************************ -->
+    <script type="text/javascript">
+        function onLoadBinaryFile() {
+            var theFile = document.getElementById("FL_Image");
+
+            // 確定選取了一個二進位檔案，而非其他格式。
+            if (theFile.files.length != 0 && theFile.files[0].type.match(/image.*/)) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var theImg = document.getElementById("Image1");
+                    theImg.src = e.target.result;
+                };
+                reader.onerror = function (e) {
+                    alert("例外狀況，無法讀取圖片檔");
+                };
+                reader.readAsDataURL(theFile.files[0]);   // 讀取圖片檔案。
+            }
+            else {
+                alert("請選取一個圖片檔");
+            }
+        }
+    </script>
+    <!-- ************************************************************ -->
+
+<input type="file" id="FL_Image" name="FL_Image" onchange="onLoadBinaryFile()" />
+
+
+
+ <!-- ******************************* -->
+    圖片預覽：<img ID="Image1" />
+    <!-- ******************************* -->

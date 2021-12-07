@@ -1,0 +1,4 @@
+       @{ // 請不要用～符號，因為傳統HTML標籤不認識它！！這是.NET網站的符號，代表網站的「根目錄」。
+                        string str = "/Images/" + Html.Raw(item.FileUpload_FileName);
+                    }
+                    <img src="@str" width="100" height="100" />

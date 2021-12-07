@@ -1,0 +1,14 @@
+Controller 需取名為名詞
+
+ex:ProductsController (建議資料表名稱)
+
+方法則使用動詞
+前面需要加入Http verb (HTTP request methodd)
+GET HEAD POST PUT DELETE CONNECT OPTIONS PATCH
+
+
+  public IHttpActionResult GetAllProducts()
+        {   // 傳回值 -- (3)  IHttpActionResult
+            return Ok(products);
+            // returns an HttpStatusCode.OK   // https://docs.microsoft.com/zh-tw/previous-versions/aspnet/dn308866%28v%3dvs.118%29
+        }

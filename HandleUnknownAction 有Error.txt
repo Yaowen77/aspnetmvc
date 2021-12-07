@@ -2,7 +2,8 @@
         // HandleUnknownAction方法標示為 virtual，所以可以用override覆寫。https://msdn.microsoft.com/zh-tw/library/dd492730(v=vs.118).aspx
         protected override void HandleUnknownAction(string actionName)
         {
-            Response.Redirect("http://公司首頁(網址)/");
+           // Response.Redirect("http://公司首頁(網址)/");
+           this.RedirectToAction("Index").ExecuteResult(this.ControllerContext); 回首頁
             base.HandleUnknownAction(actionName);
         }
         //*************************************   連結 MVC_UserDB 資料庫  ********************************* (end)

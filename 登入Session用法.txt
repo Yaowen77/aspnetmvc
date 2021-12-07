@@ -1,0 +1,14 @@
+    public class MyLogin1
+    {
+        public static bool LoginCheck()
+        {
+            if (HttpContext.Current.Session["Login"] != null && HttpContext.Current.Session["Login"].ToString() == "OK")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }

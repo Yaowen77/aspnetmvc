@@ -1,0 +1,20 @@
+       /// <summary>
+        /// LINQ & JSON。搭配 /Models/UserTable.cs。  缺點：輸出的「日期格式」怪怪的。
+        /// 資料來源  https://stackoverflow.com/questions/6126151/can-i-get-javascriptserializer-to-serialize-a-linq-result-hierarchically
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index_JSON1()
+        {
+            var data = from u in _db.UserTables
+                       select new
+                       {
+                           UserId = u.UserId,
+                           UserName = u.UserName,
+                           UserMobilePhone = u.UserMobilePhone
+                       };
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string result = serializer.Serialize(data);
+
+            return Content(result);
+        }

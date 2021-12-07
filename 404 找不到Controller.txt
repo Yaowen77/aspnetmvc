@@ -1,0 +1,10 @@
+webconfig
+
+system.web
+加入
+ <customErrors mode="On">
+      <error statusCode="404" redirect="~/Login/Index"/>
+    </customErrors>  
+
+或者參考下方網址
+https://www.freecodespot.com/blog/custom-404-error-handler/

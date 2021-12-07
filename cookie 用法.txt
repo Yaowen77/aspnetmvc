@@ -1,0 +1,10 @@
+                Response.Cookies["Login"].Value = "OK";   // 改用 cookie來做。
+                Response.Cookies["Login"].Expires = DateTime.Now.AddDays(1);  // 一天以後過期，確保安全！
+                //*************************************
+                //Response.Cookies["Login"].HttpOnly = true;   // 不允許在本地端使用 Javascript來讀取 Cookie內容
+                //Response.Cookies["Login"].Secure = true;       // 透過SSL（https）傳遞資訊
+
+
+登出
+                Response.Cookies["Login"].Value ="";
+                Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1); 

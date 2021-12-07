@@ -1,0 +1,19 @@
+
+        //===================================
+        //== 列表（Master） ==  無分頁功能。
+        //===================================
+        public JsonResult List()
+        {      //****************
+            IQueryable<UserTable> ListAll = from _userTable in _db.UserTables
+                                                            select _userTable;
+            // 或是寫成
+            //var ListAll = from m in _db.UserTables
+            //                   select m;
+            
+            return Json(ListAll.ToList(), JsonRequestBehavior.AllowGet);
+            //                                   //*************************
+            // 直到程式的最後，把查詢結果 IQueryable呼叫.ToList()時，上面那一段LINQ才會真正被執行！
+        }
+
+
+JsonRequestBehavior.AllowGet //如果沒有這段 就一定要用POST 方法 加這段才可以使用Get

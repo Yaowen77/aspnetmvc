@@ -1,0 +1,49 @@
+       /// <summary>
+        /// ADO.NET -- DataSet & JSON。缺點：輸出的「日期格式」怪怪的。
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index_JSON2()
+        {
+            SqlConnection Conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MVC_UserDB"].ConnectionString);
+            SqlDataAdapter myAdapter = new SqlDataAdapter("SELECT [UserId],[UserName],[UserSex],[UserBirthDay],[UserMobilePhone] FROM [UserTable]", Conn);
+
+            DataSet ds = new DataSet();
+
+            try  //==== 以下程式，只放「執行期間」的指令！====
+            {
+                //Conn.Open();  //---- 這一列註解掉，不用寫，DataAdapter會自動開啟
+                myAdapter.Fill(ds, "UserTable");    // 這時候執行SQL指令。取出資料，放進 DataSet。
+                //---- DataSet是由許多 DataTable組成的，我們目前只放進一個名為 test的 DataTable而已。
+
+                //******************************************************************************(start)
+                //資料來源 http://www.codeproject.com/Tips/624888/Converting-DataTable-to-JSON-Format-in-Csharp-and
+                List<Dictionary<string, object>> result_rows = new List<Dictionary<string, object>>();
+                Dictionary<string, object> row = null;
+
+                foreach (DataRow drow in ds.Tables[0].Rows)
+                {
+                    row = new Dictionary<string, object>();    // 一筆記錄
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        row.Add(col.ColumnName.Trim(), drow[col]);   // 加入一個欄位 與 值
+                    }
+                    result_rows.Add(row);
+                }
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();    // 搭配命名空間System.Web.Script.Serialization
+                return Content(serializer.Serialize(result_rows));
+                //******************************************************************************(end)
+            }
+            catch (Exception ex)
+            {
+                return Content("<hr /> Exception Error Message----  " + ex.ToString());
+            }
+            finally
+            {  //---- 不用寫，DataAdapter會自動關閉
+                //    if (Conn.State == ConnectionState.Open)  {
+                //          Conn.Close();
+                //          Conn.Dispose();
+                //    }  // 使用SqlDataAdapter的時候，不需要寫程式去控制Conn.Open()與 Conn.Close()。
+            }
+            //return View();
+        }

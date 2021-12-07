@@ -1,0 +1,40 @@
+
+        /// <summary>
+        /// ADO.NET -- DataSet & JSON。
+        /// 搭配 Newtonsoft.Json。
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult JSON_4_JsonNET()
+        {
+            string result = "";
+            SqlConnection Conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MVC_UserDB"].ConnectionString);
+            SqlDataAdapter myAdapter = new SqlDataAdapter("SELECT [UserId],[UserName],[UserSex],[UserBirthDay],[UserMobilePhone] FROM [UserTable]", Conn);
+
+            DataSet ds = new DataSet();
+
+            try  //==== 以下程式，只放「執行期間」的指令！====
+            {
+                //Conn.Open();  //---- 這一行註解掉，不用寫，DataAdapter會自動開啟
+                myAdapter.Fill(ds, "UserTable");    //這時候執行SQL指令。取出資料，放進 DataSet。
+                //---- DataSet是由許多 DataTable組成的，我們目前只放進一個名為 UserTable的 DataTable而已。
+
+                //***********************************************************************(start)
+                //資料來源： http://james.newtonking.com/json/help/index.html?topic=html/SerializeDataSet.htm
+                // 跟上一個範例的差異在此：
+                result += JsonConvert.SerializeObject(ds, Formatting.Indented);
+                result += JsonConvert.SerializeObject(ds, Formatting.None); //去除空行
+                //***********************************************************************(end)
+                return Content(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("<hr /> Exception Error Message----  " + ex.ToString());
+            }
+            finally
+            {  //---- 不用寫，DataAdapter會自動關閉
+                //    if (Conn.State == ConnectionState.Open)  {
+                //          Conn.Close();
+                //          Conn.Dispose();
+                //    }  //使用SqlDataAdapter的時候，不需要寫程式去控制Conn.Open()與 Conn.Close()。
+            }
+        }

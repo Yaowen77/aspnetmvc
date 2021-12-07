@@ -1,0 +1,17 @@
+加入
+選擇Web 服務(ASMX)
+
+原先方案參考 選擇加入服務參考
+
+    public ActionResult WS1()
+        {
+            WebService1SoapClient ws = new WebService1SoapClient();SoapClient (對方的類別名稱)
+            string str = ws.HelloWorld();
+
+            return Content(str);
+        }
+
+using WebApplication1.ServiceReference1;
+
+
+如果有新的funtion 右鍵更新服務參考

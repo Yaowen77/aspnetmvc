@@ -1,0 +1,25 @@
+        
+GET api/values/5
+ config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+
+
+GET api/values?a=1&b=2 
+      public string GetComputeIT(int a, int b)
+        {
+            int result = a + b;
+            return result.ToString();
+        }
+
+或者加入
+            config.Routes.MapHttpRoute(
+    name: "DefaultApi2",
+    routeTemplate: "api/{controller}/{a}/{b}",
+    defaults: new { id = RouteParameter.Optional }
+);
+
+GET api/values/2/3

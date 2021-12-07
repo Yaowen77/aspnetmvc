@@ -1,0 +1,58 @@
+
+        /// <summary>
+        /// ADO.NET -- DataSet & JSON。缺點：輸出的「日期格式」怪怪的。
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index_JSON_DateTime()
+        {
+            string result = "";
+            // 兩種 JSON的日期時間格式。
+            string[] jsonDates = { "/Date(1242357713797+0800)/", "/Date(1027008000000)/" };
+
+            foreach (string jsonDate in jsonDates)
+            {
+                //                         // **************  
+                DateTime dtResult = JsonToDateTime(jsonDate);
+                // 別人寫的function   *********** 放在本程式（控制器）最末端。
+
+                result += "<hr />原始格式：" + jsonDate.ToString() + "<br />";
+                result += String.Format("DateTime: {0}", dtResult.ToString("yyyy-MM-dd hh:mm:ss ffffff"));
+            }
+
+            return Content(result);
+        }
+
+
+        //**********************************************************************
+        //*** 把JSON的日期格式轉回來DateTime *************************************
+        //資料來源： http://www.cnblogs.com/coolcode/archive/2009/05/22/1487254.html
+        public static DateTime JsonToDateTime(string jsonDate)
+        {
+            string value = jsonDate.Substring(6, jsonDate.Length - 8);
+            DateTimeKind kind = DateTimeKind.Utc;
+            int index = value.IndexOf('+', 1);
+            if (index == -1)
+                index = value.IndexOf('-', 1);
+            if (index != -1)
+            {
+                kind = DateTimeKind.Local;
+                value = value.Substring(0, index);
+            }
+            long javaScriptTicks = long.Parse(value, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture);
+            long InitialJavaScriptDateTicks = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks;
+            DateTime utcDateTime = new DateTime((javaScriptTicks * 10000) + InitialJavaScriptDateTicks, DateTimeKind.Utc);
+            DateTime dateTime;
+            switch (kind)
+            {
+                case DateTimeKind.Unspecified:
+                    dateTime = DateTime.SpecifyKind(utcDateTime.ToLocalTime(), DateTimeKind.Unspecified);
+                    break;
+                case DateTimeKind.Local:
+                    dateTime = utcDateTime.ToLocalTime();
+                    break;
+                default:
+                    dateTime = utcDateTime;
+                    break;
+            }
+            return dateTime;
+        }

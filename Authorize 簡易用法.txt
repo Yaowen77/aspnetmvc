@@ -1,0 +1,120 @@
+    /// 需要搭配 (1)  Web.Config設定檔，修改如下。也要搭配 (2) Global.asax設定檔 - Application_AuthenticateRequest事件。
+    /// <system.web>
+    ///     <authentication mode = "Forms" >
+    ///          <forms loginUrl="登入頁.aspx" />                        // Web Form
+    ///          <forms loginUrl="~/Login控制器/Login動作" />  // MVC
+    ///     </authentication>
+    ///</system.web >
+
+
+       //*** 搭配 LoginController。登入與權限控管。
+        //      需搭配  System.Web.Security 與 System.Security.Principal命名空間。
+        //
+        //      Global.asax文件裡面的事件 -- https://dotblogs.com.tw/mis2000lab/2008/04/28/3526
+        //**************************************************************************
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {   // 在安全模組建立起當前用戶的有效的身份時，AuthenticateRequest事件被觸發。在這個時候，用戶的憑據將會被驗證。
+            // 另一個很類似，不要搞錯。 Application_AuthorizeRequest：當安全模組確認一個用戶可以訪問資源之後，該事件被觸發。
+
+            if (HttpContext.Current.User == null) return;   // 不符合規則的都踢出去！
+            if (HttpContext.Current.User.Identity.IsAuthenticated == false) return;
+            if (Request.IsAuthenticated == false) return;
+
+            // 先取得登入者的身份識別 -- FormsIdentity。  需搭配 System.Web.Security命名空間
+            FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+            // 再取出使用者的票證 (authTicket) -- FormsAuthenticationTicket
+            FormsAuthenticationTicket authTicket = id.Ticket;
+
+            // 取出票證 (authTicket)中的 "角色" 並轉成字串陣列 string[]。
+            //// 如果登入者是「多重的」角色，例如 1,3,5。這樣的安排可以寫下面的程式來擷取。
+            string[] arrRoles = authTicket.UserData.Split(',');
+
+            // 指派 "角色" 到目前這個 HttpContext 的 User物件
+            // ......當初建立票證 (authTicket)時，UserData屬性裡面放了什麼資訊（如：會員權限、等級、群組） 
+            // ......然後把資料放入 HttpContext 的 User物件裡面
+            HttpContext.Current.User = new GenericPrincipal(HttpContext.Current.User.Identity, arrRoles);
+            // GenericPrincipal 需搭配 System.Security.Principal命名空間
+
+
+            //      https://dotblogs.com.tw/mickey/2017/01/01/154812
+            //      https://blog.miniasp.com/post/2008/06/11/How-to-define-Roles-but-not-implementing-Role-Provider-in-ASPNET.aspx
+            //      http://kevintsengtw.blogspot.com/2013/11/aspnet-mvc.html
+        }
+
+
+        [Authorize]
+        public ActionResult Index2()
+        {
+            return View();    // 登入成功（會員）才可以看見
+        }
+
+
+
+   [HttpPost]
+        [ValidateAntiForgeryToken]   // 避免XSS、CSRF攻擊
+        public ActionResult Login(db_user _User)
+        {
+            // 請參考 UserDBController（第三天課程）的 Details動作，共有四種寫法。
+            var ListOne = from m in _db.db_users
+                          where m.UserName == _User.UserName && m.UserPassword == _User.UserPassword
+                          select m;
+
+            db_user _result = ListOne.FirstOrDefault();  // 執行上面的查詢句，得到結果。
+
+            if (_result == null)
+            {   // 找不到這一筆記錄（帳號與密碼有錯，沒有這個會員）
+                //return HttpNotFound();
+                ViewData["ErrorMessage"] = "帳號與密碼有錯";
+                return View();
+            }
+            else
+            {
+
+                FormsAuthentication.SetAuthCookie(_result.UserName,false);
+
+                ////*************************************************************(start)
+                //// https://dotblogs.com.tw/mickey/2017/01/01/154812 
+                //// https://dotblogs.com.tw/mis2000lab/2014/08/01/authentication-mode-forms_web-config
+                //// https://blog.miniasp.com/post/2008/06/11/How-to-define-Roles-but-not-implementing-Role-Provider-in-ASPNET.aspx
+                //// http://kevintsengtw.blogspot.com/2013/11/aspnet-mvc.html
+                //DateTime DTnow = DateTime.Now;
+
+                //// 以下需要搭配 System.Web.Security 命名空間。                
+                //var authTicket = new FormsAuthenticationTicket(   // 登入成功，取得門票 (票證)。請自行填寫以下資訊。
+                //    version: 1,   //版本號（Ver.）
+                //    name: _result.UserName, // ***自行放入資料（如：使用者帳號、真實名稱）
+
+                //    issueDate: DTnow,  // 登入成功後，核發此票證的本機日期和時間（資料格式 DateTime）
+                //    expiration: DTnow.AddDays(1),  //  "一天"內都有效（票證到期的本機日期和時間。）
+                //    isPersistent: true,  // 記住我？ true or false（畫面上通常會用 CheckBox表示）
+
+                //    userData: _result.UserRank.ToString(),   // ***自行放入資料（如：會員權限、等級、群組） 
+                //                                             // 與票證一起存放的使用者特定資料。
+                //                                             // 需搭配 Global.asax設定檔 - Application_AuthenticateRequest事件。
+
+                //    cookiePath: FormsAuthentication.FormsCookiePath
+                //    );
+
+
+                ////                                                                                                                        // *** 把上面的 ticket資訊 "加密"  ****** 
+                //var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket))
+                //{   // 重點！！避免 Cookie遭受攻擊、盜用或不當存取。請查詢關鍵字「」。
+                //    HttpOnly = true  // 必須上網透過http才可以存取Cookie。不允許用戶端（寫前端程式）存取
+
+                //    //HttpOnly = true,  // 必須上網透過http才可以存取Cookie。不允許用戶端（寫前端程式）存取
+                //    //Secure = true;      // 需要搭配https（SSL）才行。
+                //};
+
+
+                //if (authTicket.IsPersistent)
+                //{
+                //    authCookie.Expires = authTicket.Expiration;    // Cookie過期日（票證到期的本機日期和時間。）
+                //}
+                //Response.Cookies.Add(authCookie);   // 完成 Cookie，寫入使用者的瀏覽器與設備中
+                //                                    //*************************************************************(end)
+
+                return RedirectToAction("Index2", "Login");
+
+                // 完成這個範例以後，您可以參考這篇文章 - OWIN Forms authentication（作法很類似）
+                // https://blogs.msdn.microsoft.com/webdev/2013/07/03/understanding-owin-forms-authentication-in-mvc-5/
+            }
